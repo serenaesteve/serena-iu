@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<meta name="description" content="serena | iu · interfaz de gestión generada a partir de esquemas JSON">
+	<title>serena | iu</title>
+	<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%23FF5FA2'/><stop offset='1' stop-color='%23B517E8'/></linearGradient></defs><rect width='32' height='32' rx='10' fill='url(%23g)'/><text x='16' y='23' font-size='19' text-anchor='middle' fill='white' font-family='Georgia' font-style='italic' font-weight='700'>s</text></svg>">
+	<link rel="stylesheet" href="css/estilo.css">
+	<!-- El núcleo va en el head para aplicar el tema antes de pintar (sin parpadeo) -->
+	<script src="js/nucleo.js"></script>
+	<script src="js/aplicacion.js" defer></script>
+</head>
+<body class="serena-iu">
+
+	<header>
+		<div class="corporativo">
+			<div class="isotipo" aria-hidden="true">s</div>
+			<h1>serena <span>| iu</span></h1>
+		</div>
+
+		<div id="herramientas">
+			<label class="solo-lector" for="buscador">Buscar</label>
+			<input id="buscador" type="search" placeholder="Buscar…" autocomplete="off">
+			<button id="abrirPaleta" class="boton" type="button" title="Paleta de comandos">
+				Ir a… <span class="atajo">Ctrl K</span>
+			</button>
+			<button id="nuevo" class="boton primario" type="button" title="Nuevo registro (N)">
+				+<span> Nuevo</span>
+			</button>
+		</div>
+
+		<div id="usuario">
+			<button id="modo" class="boton boton-icono" type="button" title="Cambiar modo">☀</button>
+			<div class="datos">
+				<strong></strong>
+				<button id="cerrarSesion" type="button">Cerrar sesión</button>
+			</div>
+			<div class="imagen" aria-hidden="true"></div>
+		</div>
+	</header>
+
+	<main class="cuerpo">
+		<nav id="navegacion" class="columna" aria-label="Módulos">
+			<div class="titulo-columna">Módulos</div>
+			<div class="contenido-columna"></div>
+			<button class="minimizar" type="button">◀</button>
+		</nav>
+
+		<div class="separador" tabindex="0" role="separator" aria-orientation="vertical" aria-label="Ancho de la columna de módulos"></div>
+
+		<section id="vistas" class="columna" aria-label="Vistas">
+			<div class="titulo-columna">Vistas</div>
+			<div class="contenido-columna"></div>
+			<button class="minimizar" type="button">◀</button>
+		</section>
+
+		<div class="separador" tabindex="0" role="separator" aria-orientation="vertical" aria-label="Ancho de la columna de vistas"></div>
+
+		<div id="escenario" class="escenario" tabindex="-1"></div>
+	</main>
+
+	<!-- =====================  PLANTILLAS  ===================== -->
+
+	<template id="tpl-nav">
+		<a class="elemento-columna" href="#">
+			<span class="ficha"></span>
+			<span class="etiqueta"></span>
+		</a>
+	</template>
+
+	<template id="tpl-card">
+		<article class="elemento-columna" draggable="true" tabindex="0" role="link">
+			<span class="ficha"></span>
+			<span class="etiqueta"></span>
+		</article>
+	</template>
+
+	<template id="tpl-fila">
+		<tr></tr>
+	</template>
+
+	<template id="tpl-formulario">
+		<form class="tarjeta" novalidate>
+			<div class="form-rejilla"></div>
+			<div class="fila-botones" style="margin-top:20px">
+				<button class="boton primario" type="submit" data-accion="guardar">Guardar</button>
+				<button class="boton" type="button" data-accion="cancelar">Cancelar</button>
+			</div>
+		</form>
+	</template>
+
+	<template id="tpl-toast">
+		<article class="toast" role="status">
+			<div class="toast-icono" aria-hidden="true"></div>
+			<div>
+				<p class="toast-titulo"></p>
+				<p class="toast-texto"></p>
+				<button class="toast-accion" type="button" hidden></button>
+			</div>
+			<button class="toast-cerrar" type="button" aria-label="Cerrar">×</button>
+		</article>
+	</template>
+
+	<template id="tpl-dialogo">
+		<dialog class="dialogo">
+			<div class="dialogo-cuerpo">
+				<h2></h2>
+				<p></p>
+				<div class="fila-botones">
+					<button class="boton" type="button" data-accion="cancelar">Cancelar</button>
+					<button class="boton primario" type="button" data-accion="aceptar">Aceptar</button>
+				</div>
+			</div>
+		</dialog>
+	</template>
+
+	<template id="tpl-detalle">
+		<div class="detalle-capa">
+			<aside class="detalle" role="dialog" aria-modal="true" aria-labelledby="detalle-titulo">
+				<header class="detalle-cabecera">
+					<div class="detalle-identidad">
+						<span class="detalle-avatar" aria-hidden="true"></span>
+						<div>
+							<h2 id="detalle-titulo"></h2>
+							<p></p>
+						</div>
+					</div>
+					<button class="boton boton-icono" type="button" data-accion="cerrar" aria-label="Cerrar ficha">×</button>
+				</header>
+				<div class="detalle-cuerpo">
+					<dl class="detalle-campos"></dl>
+					<div class="detalle-relaciones"></div>
+				</div>
+				<footer class="detalle-pie">
+					<button class="boton primario" type="button" data-accion="editar">Editar</button>
+					<button class="boton" type="button" data-accion="borrar">Borrar</button>
+				</footer>
+			</aside>
+		</div>
+	</template>
+
+	<template id="tpl-paleta">
+		<dialog class="paleta" aria-label="Paleta de comandos">
+			<input type="text" placeholder="Escribe una vista, una acción o un registro…" role="combobox" aria-expanded="true" aria-controls="paleta-lista" autocomplete="off">
+			<ul id="paleta-lista" role="listbox"></ul>
+			<div class="paleta-pie">
+				<span><kbd>↑</kbd> <kbd>↓</kbd> moverse</span>
+				<span><kbd>Enter</kbd> abrir</span>
+				<span><kbd>Esc</kbd> cerrar</span>
+			</div>
+		</dialog>
+	</template>
+
+</body>
+</html>

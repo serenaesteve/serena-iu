@@ -1,0 +1,20 @@
+{
+	"inicio": [
+		{ "id": "panel",   "emoji": "✨", "texto": "Panel" },
+		{ "id": "atajos",  "emoji": "⌨️", "texto": "Atajos de teclado" }
+	],
+	"datos": [
+		{ "id": "listado", "emoji": "📋", "texto": "Listado" },
+		{ "id": "nuevo",   "emoji": "➕", "texto": "Nuevo registro" },
+		{ "id": "resumen", "emoji": "📊", "texto": "Resumen" }
+	],
+	"componentes": [
+		{ "id": "formularios", "emoji": "📝", "texto": "Formularios" },
+		{ "id": "toasts",      "emoji": "💬", "texto": "Toasts" },
+		{ "id": "dialogos",    "emoji": "🪟", "texto": "Diálogos" }
+	],
+	"ajustes": [
+		{ "id": "apariencia", "emoji": "🎨", "texto": "Apariencia" },
+		{ "id": "datos",      "emoji": "💾", "texto": "Copia de seguridad" }
+	]
+}

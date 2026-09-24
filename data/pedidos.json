@@ -1,0 +1,183 @@
+{
+	"titulo": "Pedidos",
+	"singular": "pedido",
+	"descripcion": "Ventas relacionadas con clientes y productos.",
+	"campos": [
+		{
+			"nombre": "id",
+			"etiqueta": "ID",
+			"tipo": "number",
+			"listado": true
+		},
+		{
+			"nombre": "cliente",
+			"etiqueta": "Cliente",
+			"tipo": "select",
+			"origen": "clientes",
+			"mostrar": [
+				"nombre",
+				"apellidos"
+			],
+			"requerido": true,
+			"listado": true
+		},
+		{
+			"nombre": "producto",
+			"etiqueta": "Producto",
+			"tipo": "select",
+			"origen": "productos",
+			"mostrar": [
+				"nombre"
+			],
+			"requerido": true,
+			"listado": true
+		},
+		{
+			"nombre": "unidades",
+			"etiqueta": "Unidades",
+			"tipo": "number",
+			"min": 1,
+			"requerido": true,
+			"listado": true,
+			"defecto": 1
+		},
+		{
+			"nombre": "total",
+			"etiqueta": "Total",
+			"tipo": "number",
+			"formato": "moneda",
+			"paso": 0.01,
+			"min": 0,
+			"listado": true,
+			"calculo": {
+				"cantidad": "unidades",
+				"referencia": "producto",
+				"origen": "productos",
+				"precio": "precio"
+			},
+			"soloLectura": true
+		},
+		{
+			"nombre": "fecha",
+			"etiqueta": "Fecha",
+			"tipo": "date",
+			"requerido": true,
+			"listado": true,
+			"defecto": "hoy"
+		},
+		{
+			"nombre": "estado",
+			"etiqueta": "Estado",
+			"tipo": "select",
+			"opciones": [
+				"Pendiente",
+				"Enviado",
+				"Entregado",
+				"Cancelado"
+			],
+			"listado": true,
+			"defecto": "Pendiente",
+			"colores": {
+				"Pendiente": 38,
+				"Enviado": 200,
+				"Entregado": 150,
+				"Cancelado": 355
+			}
+		},
+		{
+			"nombre": "pagado",
+			"etiqueta": "Pagado",
+			"tipo": "checkbox",
+			"listado": true
+		},
+		{
+			"nombre": "notas",
+			"etiqueta": "Notas",
+			"tipo": "textarea"
+		}
+	],
+	"datos": [
+		{
+			"id": 1,
+			"cliente": "Carlos Sánchez López",
+			"producto": "Portátil ProBook 15",
+			"unidades": 4,
+			"total": 2999.96,
+			"fecha": "2026-06-02",
+			"estado": "Entregado",
+			"pagado": true,
+			"notas": ""
+		},
+		{
+			"id": 2,
+			"cliente": "Javier Torres Romero",
+			"producto": "Monitor UltraView 27",
+			"unidades": 10,
+			"total": 2299,
+			"fecha": "2026-06-15",
+			"estado": "Entregado",
+			"pagado": true,
+			"notas": "Factura con IVA desglosado."
+		},
+		{
+			"id": 3,
+			"cliente": "Laura Martínez García",
+			"producto": "Teclado Mecánico K500",
+			"unidades": 1,
+			"total": 79.95,
+			"fecha": "2026-07-03",
+			"estado": "Enviado",
+			"pagado": true,
+			"notas": ""
+		},
+		{
+			"id": 4,
+			"cliente": "Hugo Vidal Company",
+			"producto": "SSD Portable 2 TB",
+			"unidades": 3,
+			"total": 448.5,
+			"fecha": "2026-08-20",
+			"estado": "Pendiente",
+			"pagado": false,
+			"notas": "Esperando confirmación."
+		},
+		{
+			"id": 5,
+			"cliente": "Irene Blasco Mora",
+			"producto": "Silla Operativa Flex",
+			"unidades": 2,
+			"total": 378,
+			"fecha": "2026-09-01",
+			"estado": "Pendiente",
+			"pagado": false,
+			"notas": ""
+		},
+		{
+			"id": 6,
+			"cliente": "Ana Gómez Pérez",
+			"producto": "Ratón Ergonómico M3",
+			"unidades": 6,
+			"total": 239.4,
+			"fecha": "2026-09-12",
+			"estado": "Enviado",
+			"pagado": true,
+			"notas": ""
+		},
+		{
+			"id": 7,
+			"cliente": "Pau Ferrer Climent",
+			"producto": "Monitor UltraView 27",
+			"unidades": 2,
+			"total": 459.8,
+			"fecha": "2026-05-18",
+			"estado": "Cancelado",
+			"pagado": false,
+			"notas": "Cancelado por el cliente."
+		}
+	],
+	"etiquetaRegistro": [
+		"#id",
+		"cliente"
+	],
+	"filtroRapido": "estado"
+}

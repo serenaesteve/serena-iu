@@ -1,0 +1,195 @@
+{
+	"titulo": "Productos",
+	"singular": "producto",
+	"descripcion": "Catálogo con precio y existencias.",
+	"campos": [
+		{
+			"nombre": "id",
+			"etiqueta": "ID",
+			"tipo": "number",
+			"listado": true
+		},
+		{
+			"nombre": "nombre",
+			"etiqueta": "Nombre del producto",
+			"tipo": "text",
+			"requerido": true,
+			"listado": true
+		},
+		{
+			"nombre": "descripcion",
+			"etiqueta": "Descripción",
+			"tipo": "textarea"
+		},
+		{
+			"nombre": "categoria",
+			"etiqueta": "Categoría",
+			"tipo": "select",
+			"opciones": [
+				"Informática",
+				"Periféricos",
+				"Telefonía",
+				"Oficina",
+				"Almacenamiento"
+			],
+			"listado": true,
+			"colores": {
+				"Informática": 200,
+				"Periféricos": 265,
+				"Telefonía": 335,
+				"Oficina": 38,
+				"Almacenamiento": 170
+			}
+		},
+		{
+			"nombre": "precio",
+			"etiqueta": "Precio",
+			"tipo": "number",
+			"formato": "moneda",
+			"paso": 0.01,
+			"min": 0,
+			"requerido": true,
+			"listado": true,
+			"agregado": "media"
+		},
+		{
+			"nombre": "stock",
+			"etiqueta": "Stock",
+			"tipo": "number",
+			"min": 0,
+			"listado": true
+		},
+		{
+			"nombre": "fecha_alta",
+			"etiqueta": "Fecha de alta",
+			"tipo": "date",
+			"defecto": "hoy"
+		},
+		{
+			"nombre": "fabricante",
+			"etiqueta": "Fabricante",
+			"tipo": "text",
+			"listado": true
+		},
+		{
+			"nombre": "web",
+			"etiqueta": "Página del producto",
+			"tipo": "url"
+		},
+		{
+			"nombre": "descatalogado",
+			"etiqueta": "Descatalogado",
+			"tipo": "checkbox",
+			"listado": true
+		}
+	],
+	"datos": [
+		{
+			"id": 1,
+			"nombre": "Portátil ProBook 15",
+			"descripcion": "Portátil profesional de 15 pulgadas para oficina y desarrollo.",
+			"categoria": "Informática",
+			"precio": 749.99,
+			"stock": 12,
+			"fecha_alta": "2026-01-15",
+			"fabricante": "TechNova",
+			"web": "https://example.com/probook15",
+			"descatalogado": false
+		},
+		{
+			"id": 2,
+			"nombre": "Monitor UltraView 27",
+			"descripcion": "Monitor IPS de 27 pulgadas con resolución 2560x1440.",
+			"categoria": "Informática",
+			"precio": 229.9,
+			"stock": 25,
+			"fecha_alta": "2026-02-03",
+			"fabricante": "UltraView",
+			"web": "https://example.com/ultraview27",
+			"descatalogado": false
+		},
+		{
+			"id": 3,
+			"nombre": "Teclado Mecánico K500",
+			"descripcion": "Teclado mecánico USB para programación y uso intensivo.",
+			"categoria": "Periféricos",
+			"precio": 79.95,
+			"stock": 40,
+			"fecha_alta": "2026-02-20",
+			"fabricante": "KeyMaster",
+			"web": "https://example.com/k500",
+			"descatalogado": false
+		},
+		{
+			"id": 4,
+			"nombre": "SSD Portable 2 TB",
+			"descripcion": "Unidad SSD externa USB-C de alta velocidad.",
+			"categoria": "Almacenamiento",
+			"precio": 149.5,
+			"stock": 18,
+			"fecha_alta": "2026-03-12",
+			"fabricante": "DataFast",
+			"web": "https://example.com/ssd2tb",
+			"descatalogado": false
+		},
+		{
+			"id": 5,
+			"nombre": "Smartphone Nova X",
+			"descripcion": "Teléfono móvil con pantalla OLED y 256 GB de almacenamiento.",
+			"categoria": "Telefonía",
+			"precio": 499.0,
+			"stock": 0,
+			"fecha_alta": "2026-04-08",
+			"fabricante": "NovaMobile",
+			"web": "https://example.com/novax",
+			"descatalogado": false
+		},
+		{
+			"id": 6,
+			"nombre": "Ratón Ergonómico M3",
+			"descripcion": "Ratón vertical inalámbrico.",
+			"categoria": "Periféricos",
+			"precio": 39.9,
+			"stock": 55,
+			"fecha_alta": "2026-04-22",
+			"fabricante": "KeyMaster",
+			"web": "https://example.com/m3",
+			"descatalogado": false
+		},
+		{
+			"id": 7,
+			"nombre": "Silla Operativa Flex",
+			"descripcion": "Silla de oficina con soporte lumbar regulable.",
+			"categoria": "Oficina",
+			"precio": 189.0,
+			"stock": 7,
+			"fecha_alta": "2026-05-06",
+			"fabricante": "OfiPro",
+			"web": "https://example.com/flex",
+			"descatalogado": false
+		},
+		{
+			"id": 8,
+			"nombre": "Disco HDD 4 TB",
+			"descripcion": "Disco duro interno de 3,5 pulgadas.",
+			"categoria": "Almacenamiento",
+			"precio": 94.9,
+			"stock": 0,
+			"fecha_alta": "2025-09-10",
+			"fabricante": "DataFast",
+			"web": "https://example.com/hdd4",
+			"descatalogado": true
+		}
+	],
+	"etiquetaRegistro": [
+		"nombre"
+	],
+	"panel": {
+		"etiqueta": "Valor en stock",
+		"multiplicar": [
+			"precio",
+			"stock"
+		]
+	},
+	"filtroRapido": "categoria"
+}

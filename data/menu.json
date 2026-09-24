@@ -1,0 +1,8 @@
+[
+	{ "id": "inicio",      "emoji": "🏠", "texto": "Inicio",      "tipo": "inicio" },
+	{ "id": "clientes",    "emoji": "👥", "texto": "Clientes",    "tipo": "datos", "origen": "data/clientes.json" },
+	{ "id": "productos",   "emoji": "📦", "texto": "Productos",   "tipo": "datos", "origen": "data/productos.json" },
+	{ "id": "pedidos",     "emoji": "🧾", "texto": "Pedidos",     "tipo": "datos", "origen": "data/pedidos.json" },
+	{ "id": "componentes", "emoji": "🧩", "texto": "Componentes", "tipo": "componentes" },
+	{ "id": "ajustes",     "emoji": "⚙️", "texto": "Ajustes",     "tipo": "ajustes" }
+]

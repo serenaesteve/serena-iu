@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>Acceso · serena | iu</title>
+	<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%23FF5FA2'/><stop offset='1' stop-color='%23B517E8'/></linearGradient></defs><rect width='32' height='32' rx='10' fill='url(%23g)'/><text x='16' y='23' font-size='19' text-anchor='middle' fill='white' font-family='Georgia' font-style='italic' font-weight='700'>s</text></svg>">
+	<link rel="stylesheet" href="css/estilo.css">
+	<script src="js/nucleo.js"></script>
+	<script src="js/acceso.js" defer></script>
+</head>
+<body class="acceso">
+
+	<main class="acceso-layout">
+
+		<!-- ESCAPARATE: presentación y vista previa de la aplicación -->
+		<section class="vitrina">
+			<div class="vitrina-marca">
+				<div class="isotipo" aria-hidden="true">s</div>
+				<span>serena <em>| iu</em></span>
+			</div>
+
+			<div class="vitrina-texto">
+				<h1>Todo tu negocio,<br>en una sola vista.</h1>
+				<p>Clientes, productos y pedidos en una interfaz que se construye sola a partir de sus datos.</p>
+				<ul class="vitrina-ventajas">
+					<li>Encuentra cualquier cosa con <kbd>Ctrl</kbd> <kbd>K</kbd></li>
+					<li>Gráficos y resúmenes que se calculan solos</li>
+					<li>Fichas con todo lo relacionado a un clic</li>
+				</ul>
+			</div>
+
+			<div class="vitrina-escena" aria-hidden="true">
+				<div class="vitrina-tarjeta vt-kpi">
+					<span class="vt-etiqueta">Facturación anual</span>
+					<strong>2,3 M €</strong>
+					<svg viewBox="0 0 200 56" preserveAspectRatio="none">
+						<defs>
+							<linearGradient id="vt-g" x1="0" x2="0" y1="0" y2="1">
+								<stop offset="0" stop-color="currentColor" stop-opacity=".35"/>
+								<stop offset="1" stop-color="currentColor" stop-opacity="0"/>
+							</linearGradient>
+						</defs>
+						<path d="M0,44 C25,40 35,30 60,32 C85,34 95,18 120,20 C145,22 160,8 200,6 L200,56 L0,56Z" fill="url(#vt-g)"/>
+						<path d="M0,44 C25,40 35,30 60,32 C85,34 95,18 120,20 C145,22 160,8 200,6" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+					</svg>
+				</div>
+
+				<div class="vitrina-tarjeta vt-pedido">
+					<span class="avatar" style="background-color:hsl(210,55%,45%)">CS</span>
+					<div>
+						<strong>Pedido #8</strong>
+						<span>Carlos Sánchez · 2.249,97 €</span>
+					</div>
+					<span class="pastilla" style="--h:150">Entregado</span>
+				</div>
+
+				<div class="vitrina-tarjeta vt-barras">
+					<span class="vt-etiqueta">Por categoría</span>
+					<div class="vt-columnas">
+						<i style="--alto:90%"></i><i style="--alto:62%"></i><i style="--alto:75%"></i><i style="--alto:40%"></i><i style="--alto:55%"></i>
+					</div>
+				</div>
+			</div>
+
+			<small class="vitrina-pie">Proyecto de Desarrollo de interfaces · DAM · TAME Formación</small>
+		</section>
+
+		<!-- FORMULARIOS -->
+		<section class="acceso-tarjeta">
+			<div class="pestanas" role="tablist">
+				<button id="pestana-entrar" role="tab" aria-selected="true" aria-controls="form-entrar" type="button">Entrar</button>
+				<button id="pestana-registro" role="tab" aria-selected="false" aria-controls="form-registro" type="button">Crear cuenta</button>
+			</div>
+
+			<form id="form-entrar" role="tabpanel" aria-labelledby="pestana-entrar" novalidate>
+				<h2>Bienvenida de nuevo</h2>
+				<p>Introduce tus datos para continuar.</p>
+				<div class="form-rejilla">
+					<p class="mensaje-formulario" role="alert"></p>
+					<label class="campo">
+						<span>Email</span>
+						<input name="email" type="email" autocomplete="username" required placeholder="nombre@ejemplo.com">
+					</label>
+					<label class="campo">
+						<span>Contraseña</span>
+						<span class="campo-clave">
+							<input name="clave" type="password" autocomplete="current-password" required>
+							<button type="button" data-accion="ver">Mostrar</button>
+						</span>
+					</label>
+					<label class="campo campo-check">
+						<input name="recordar" type="checkbox">
+						<span>Mantener la sesión iniciada</span>
+					</label>
+					<button class="boton primario" type="submit">Entrar</button>
+				</div>
+				<div class="pista-demo">
+					Cuenta de prueba: <code>demo@serena.iu</code> · contraseña <code>demo1234</code>
+				</div>
+			</form>
+
+			<form id="form-registro" role="tabpanel" aria-labelledby="pestana-registro" hidden novalidate>
+				<h2>Crea tu cuenta</h2>
+				<p>Solo necesitas un minuto.</p>
+				<div class="form-rejilla">
+					<p class="mensaje-formulario" role="alert"></p>
+					<label class="campo">
+						<span>Nombre</span>
+						<input name="nombre" autocomplete="name" required>
+					</label>
+					<label class="campo">
+						<span>Email</span>
+						<input name="email" type="email" autocomplete="email" required placeholder="nombre@ejemplo.com">
+					</label>
+					<label class="campo">
+						<span>Contraseña</span>
+						<span class="campo-clave">
+							<input name="clave" type="password" autocomplete="new-password" minlength="8" required>
+							<button type="button" data-accion="ver">Mostrar</button>
+						</span>
+						<span class="fuerza" aria-hidden="true"><span></span></span>
+						<span class="fuerza-texto">Mínimo 8 caracteres.</span>
+					</label>
+					<label class="campo">
+						<span>Repite la contraseña</span>
+						<input name="repetir" type="password" autocomplete="new-password" required>
+					</label>
+					<button class="boton primario" type="submit">Crear cuenta</button>
+				</div>
+			</form>
+		</section>
+	</main>
+
+	<template id="tpl-toast">
+		<article class="toast" role="status">
+			<div class="toast-icono" aria-hidden="true"></div>
+			<div>
+				<p class="toast-titulo"></p>
+				<p class="toast-texto"></p>
+				<button class="toast-accion" type="button" hidden></button>
+			</div>
+			<button class="toast-cerrar" type="button" aria-label="Cerrar">×</button>
+		</article>
+	</template>
+
+</body>
+</html>
