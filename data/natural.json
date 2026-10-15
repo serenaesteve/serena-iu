@@ -1,0 +1,61 @@
+{
+	"comandos": [
+		{
+			"grupo": "Navegar",
+			"ejemplos": ["Ir a clientes", "Resumen de pedidos", "Abre la apariencia", "Ayuda"],
+			"descripcion": "Abre cualquier módulo o vista diciendo su nombre."
+		},
+		{
+			"grupo": "Fichas",
+			"ejemplos": ["Abre el pedido 3", "Abre el cliente Laura", "Edita el cliente 3"],
+			"descripcion": "Abre la ficha de un registro por número o por nombre."
+		},
+		{
+			"grupo": "Dictar un formulario",
+			"ejemplos": ["Nuevo cliente nombre Laura apellidos Gil correo laura@gil.es tipo particular", "Nuevo pedido cliente Carlos producto portátil unidades 2", "Guardar"],
+			"descripcion": "Di el nombre del campo y su valor. Funciona en cualquier formulario abierto, y los cálculos (como el total del pedido) se hacen solos."
+		},
+		{
+			"grupo": "Buscar y filtrar",
+			"ejemplos": ["Busca portátil", "Busca Laura en clientes", "Pedidos pendientes", "Quita el filtro"],
+			"descripcion": "Escribe en el buscador o aplica los filtros rápidos."
+		},
+		{
+			"grupo": "Preguntar",
+			"ejemplos": ["¿Cuántos pedidos pendientes hay?", "¿Qué cliente factura más?", "¿Cuál es el producto más barato?", "Dame un resumen"],
+			"descripcion": "Calcula la respuesta con los datos, la dice en voz alta y enseña el registro."
+		},
+		{
+			"grupo": "Realidad aumentada",
+			"ejemplos": ["Enséñame el portátil en la mano", "Siguiente", "Cerrar"],
+			"descripcion": "Abre el producto en 3D sobre tu mano, para enseñárselo a un cliente."
+		},
+		{
+			"grupo": "Moverse y confirmar",
+			"ejemplos": ["Siguiente", "Anterior", "Cerrar", "Sí", "No"],
+			"descripcion": "Cambia de página, cierra fichas y responde a los diálogos de confirmación."
+		},
+		{
+			"grupo": "Apariencia y control",
+			"ejemplos": ["Modo claro", "Color verde", "Activa los gestos", "Deja de escuchar"],
+			"descripcion": "Cambia el tema o enciende y apaga la voz y la cámara."
+		},
+		{
+			"grupo": "Cualquier otra cosa",
+			"ejemplos": ["¿Qué ha comprado Carlos Sánchez?"],
+			"descripcion": "Si no es una orden conocida, se la pregunta al modelo local (Ollama) junto con los datos."
+		}
+	],
+
+	"gestos": [
+		{ "id": "apuntar",  "emoji": "☝️", "nombre": "Apuntar",                     "parte": "Puntas del índice y del pulgar", "accion": "Mueve el cursor por la pantalla." },
+		{ "id": "pinza",    "emoji": "🤏", "nombre": "Pellizco",                    "parte": "Índice + pulgar",                "accion": "Hace clic donde está el cursor." },
+		{ "id": "arrastrar","emoji": "↕️", "nombre": "Pellizcar y mover",           "parte": "Pinza en movimiento",            "accion": "Desplaza la tabla o la página." },
+		{ "id": "deslizar", "emoji": "👋", "nombre": "Deslizar la mano",            "parte": "Movimiento de la muñeca",        "accion": "Página siguiente o anterior del listado." },
+		{ "id": "palma",    "emoji": "✋", "nombre": "Palma abierta y quieta",      "parte": "Los cinco dedos",                "accion": "Cierra la ficha o el diálogo, o vuelve al listado." },
+		{ "id": "pulgar",   "emoji": "👍", "nombre": "Pulgar arriba",               "parte": "Pulgar",                         "accion": "Acepta el diálogo o guarda el formulario." },
+		{ "id": "asentir",  "emoji": "🙆", "nombre": "Asentir con la cabeza",       "parte": "Cara · movimiento vertical",     "accion": "Responde «Sí» a un diálogo (p. ej. confirmar un borrado)." },
+		{ "id": "negar",    "emoji": "🙅", "nombre": "Negar con la cabeza",         "parte": "Cara · movimiento horizontal",   "accion": "Responde «No» a un diálogo." },
+		{ "id": "ausente",  "emoji": "🙈", "nombre": "Irse de delante de la cámara","parte": "Presencia de la cara",           "accion": "Oculta los datos de clientes (modo privacidad)." }
+	]
+}

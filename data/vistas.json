@@ -1,7 +1,7 @@
 {
 	"inicio": [
 		{ "id": "panel",   "emoji": "✨", "texto": "Panel" },
-		{ "id": "atajos",  "emoji": "⌨️", "texto": "Atajos de teclado" }
+		{ "id": "atajos",  "emoji": "💡", "texto": "Ayuda y atajos" }
 	],
 	"datos": [
 		{ "id": "listado", "emoji": "📋", "texto": "Listado" },
@@ -15,6 +15,7 @@
 	],
 	"ajustes": [
 		{ "id": "apariencia", "emoji": "🎨", "texto": "Apariencia" },
+		{ "id": "natural",    "emoji": "🎙️", "texto": "Voz y gestos" },
 		{ "id": "datos",      "emoji": "💾", "texto": "Copia de seguridad" }
 	]
 }

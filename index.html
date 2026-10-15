@@ -10,6 +10,8 @@
 	<!-- El núcleo va en el head para aplicar el tema antes de pintar (sin parpadeo) -->
 	<script src="js/nucleo.js"></script>
 	<script src="js/aplicacion.js" defer></script>
+	<!-- Interfaces naturales (RA2): voz, gestos, asistente y realidad aumentada -->
+	<script src="js/natural.js" defer></script>
 </head>
 <body class="serena-iu">
 
@@ -31,6 +33,11 @@
 		</div>
 
 		<div id="usuario">
+			<div class="botones-naturales">
+				<button id="botonVoz" class="boton boton-icono" type="button" title="Dar una orden por voz (V)" aria-label="Dar una orden por voz" aria-pressed="false">🎤</button>
+				<button id="botonGestos" class="boton boton-icono" type="button" title="Control por gestos con la cámara (G)" aria-label="Control por gestos" aria-pressed="false">🖐️</button>
+				<button id="botonAsistente" class="boton boton-icono" type="button" title="Asistente (A)" aria-label="Asistente" aria-pressed="false">✦</button>
+			</div>
 			<button id="modo" class="boton boton-icono" type="button" title="Cambiar modo">☀</button>
 			<div class="datos">
 				<strong></strong>
@@ -150,6 +157,64 @@
 				<span><kbd>Esc</kbd> cerrar</span>
 			</div>
 		</dialog>
+	</template>
+
+	<!-- ===============  PLANTILLAS · INTERFACES NATURALES  =============== -->
+
+	<template id="tpl-asistente">
+		<aside class="asistente" aria-label="Asistente">
+			<header class="asistente-cabecera">
+				<span class="asistente-orbe" aria-hidden="true"></span>
+				<div class="asistente-titulo">
+					<strong>Asistente</strong>
+					<small class="asistente-estado">Escribe o pulsa el micrófono</small>
+				</div>
+				<button class="boton boton-icono" type="button" data-accion="cerrar" aria-label="Cerrar asistente">×</button>
+			</header>
+			<ol class="asistente-mensajes" aria-live="polite"></ol>
+			<form class="asistente-entrada">
+				<input type="text" placeholder="Prueba: «pedidos pendientes»" autocomplete="off" aria-label="Mensaje para el asistente">
+				<button class="boton boton-icono" type="button" data-accion="microfono" aria-label="Hablar">🎤</button>
+				<button class="boton boton-icono primario" type="submit" aria-label="Enviar">➜</button>
+			</form>
+		</aside>
+	</template>
+
+	<template id="tpl-ar">
+		<div class="ar-pantalla" role="dialog" aria-modal="true" aria-label="Producto en realidad aumentada">
+			<header class="ar-barra">
+				<div class="ar-titulo">
+					<strong></strong>
+					<small>✋ Abre la mano delante de la cámara · 🤏 pellizca para cambiar · ✊ cierra el puño para guardarlo</small>
+				</div>
+				<div class="fila-botones">
+					<button class="boton boton-icono" type="button" data-accion="anterior" aria-label="Producto anterior">‹</button>
+					<button class="boton boton-icono" type="button" data-accion="siguiente" aria-label="Producto siguiente">›</button>
+					<button class="boton primario" type="button" data-accion="captura">📸 Captura</button>
+					<button class="boton boton-icono" type="button" data-accion="cerrar" aria-label="Cerrar">×</button>
+				</div>
+			</header>
+			<div class="ar-marco">
+				<video autoplay muted playsinline></video>
+				<div class="ar-capa"></div>
+				<div class="ar-ayuda" hidden></div>
+			</div>
+		</div>
+	</template>
+
+	<template id="tpl-camara">
+		<aside class="camara-natural" aria-label="Cámara para los gestos">
+			<header class="camara-cabecera">
+				<span class="camara-estado">Cargando…</span>
+				<button type="button" data-accion="minimizar" title="Minimizar">—</button>
+				<button type="button" data-accion="apagar" title="Apagar la cámara">×</button>
+			</header>
+			<div class="camara-imagen">
+				<video autoplay muted playsinline></video>
+				<canvas width="640" height="480"></canvas>
+			</div>
+			<p class="camara-gesto" aria-live="polite"></p>
+		</aside>
 	</template>
 
 </body>

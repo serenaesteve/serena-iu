@@ -191,5 +191,6 @@
 			"stock"
 		]
 	},
-	"filtroRapido": "categoria"
+	"filtroRapido": "categoria",
+	"realidadAumentada": true
 }

@@ -934,7 +934,8 @@
 
 			lista.push(
 				{ grupo: "Acción", emoji: "🌓", texto: "Cambiar entre modo claro y oscuro", ejecutar: () => app.alternarModo() },
-				{ grupo: "Acción", emoji: "🚪", texto: "Cerrar sesión", ejecutar: () => app.cerrarSesion() }
+				{ grupo: "Acción", emoji: "🚪", texto: "Cerrar sesión", ejecutar: () => app.cerrarSesion() },
+				...(app.natural?.comandosPaleta() ?? [])
 			);
 
 			Object.values(app.entidades).forEach((entidad) => {
@@ -1278,6 +1279,7 @@
 			});
 			DOM.uno("[data-accion=cerrar]", capa).addEventListener("click", () => this.cerrar());
 			capa.addEventListener("click", (evento) => { if (evento.target === capa) { this.cerrar(); } });
+			this.app.natural?.accionesDetalle(entidad, registro, DOM.uno(".detalle-pie", capa)); // p. ej. «Ver en tu mano»
 			panel.addEventListener("keydown", (evento) => {
 				if (evento.key === "Escape") { evento.stopPropagation(); this.cerrar(); }
 				// Mantener el foco dentro del panel (patrón de diálogo modal)
@@ -1515,6 +1517,7 @@
 			const escenario = DOM.uno("#escenario");
 
 			this.detalle.cerrar(true);
+			this.natural?.alSalirDeVista(); // libera la escena 3D si se estaba en realidad aumentada
 			this.estado.rutaActual = location.hash;
 			this.estado.sucio = false;
 			this.marcarMenu(modulo.id);
@@ -1529,7 +1532,11 @@
 				inicio: () => (vista === "atajos" ? this.vistaAtajos(escenario) : this.vistaPanel(escenario)),
 				datos: () => this.vistaDatos(this.entidades[modulo.id], vista, ruta.id, escenario),
 				componentes: () => this.vistaComponentes(vista, escenario),
-				ajustes: () => (vista === "datos" ? this.vistaCopia(escenario) : this.vistaApariencia(escenario))
+				ajustes: () => {
+					if (vista === "datos") { this.vistaCopia(escenario); return; }
+					if (vista === "natural" && this.natural) { this.natural.vistaAjustes(escenario); return; }
+					this.vistaApariencia(escenario);
+				}
 			};
 
 			(vistasPorTipo[modulo.tipo] || vistasPorTipo.inicio)();
@@ -1635,6 +1642,7 @@
 				this.cabecera(entidad.titulo, entidad.esquema.descripcion, [
 					{ id: "borrarSeleccion", texto: "Borrar seleccionados", clase: "peligro", oculto: true, alPulsar: () => this.borrarRegistros(entidad, [...this.tabla.estadoDe(entidad).seleccion]) },
 					{ texto: "Exportar CSV", alPulsar: () => this.exportarCSV(entidad) },
+					...(entidad.esquema.realidadAumentada && this.natural ? [{ texto: "🪄 Ver en tu mano", alPulsar: () => this.natural.ar.abrir() }] : []),
 					{ texto: `+ Nuevo ${entidad.singular}`, clase: "primario", alPulsar: () => Enrutador.ir(entidad.id, "nuevo") }
 				]),
 				...(entidad.esquema.filtroRapido ? [this.crearChips(entidad, contenedor)] : []),
@@ -1686,6 +1694,7 @@
 				),
 				formulario
 			);
+			this.natural?.prepararFormulario(formulario, entidad); // botón «Dictar»
 
 			DOM.uno("input:not([readonly]),select,textarea", formulario)?.focus();
 		}
@@ -1736,7 +1745,8 @@
 			const fecha = new Date().toLocaleDateString("es-ES", { weekday: "long", day: "numeric", month: "long" });
 			const cifras = document.createElement("div");
 
-			escenario.appendChild(this.cabecera(`${saludo}, ${this.estado.sesion.nombre.split(" ")[0]}`, capitalizar(fecha)));
+			const escuchar = this.natural ? [{ texto: "🔊 Escuchar resumen", alPulsar: () => this.natural.leerResumen() }] : [];
+			escenario.appendChild(this.cabecera(`${saludo}, ${this.estado.sesion.nombre.split(" ")[0]}`, capitalizar(fecha), escuchar));
 			cifras.className = "rejilla";
 
 			Object.values(this.entidades).forEach((entidad) => {
@@ -1838,6 +1848,9 @@
 				["N", "Crear un registro nuevo en el módulo actual"],
 				["Escape", "Volver al listado, o limpiar el buscador"],
 				["?", "Mostrar esta página"],
+				["V", "Dar una orden por voz"],
+				["G", "Activar o desactivar el control por gestos"],
+				["A", "Abrir o cerrar el asistente"],
 				["Clic en una fila", "Abrir la ficha con sus datos y registros relacionados"],
 				["Doble clic en una fila", "Editar el registro"],
 				["Flechas sobre un separador", "Cambiar el ancho de la columna"],
@@ -1852,7 +1865,8 @@
 				fila.children[1].textContent = atajos[i][1];
 			});
 
-			escenario.append(this.cabecera("Atajos de teclado", "Todo se puede hacer sin ratón."), tarjeta);
+			escenario.append(this.cabecera("Ayuda y atajos", "Todo se puede hacer con el teclado, con la voz o con las manos."), tarjeta);
+			this.natural?.ayuda(escenario); // comandos de voz y gestos (data/natural.json)
 		}
 
 		/* ---------- Vistas: componentes ---------- */
