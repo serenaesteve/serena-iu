@@ -1,0 +1,5 @@
+{
+	// Tipos de gota (lib/gota/dist/gota.d.ts) para el autocompletado en js/
+	"compilerOptions": { "target": "es2022", "lib": ["es2022", "dom"], "checkJs": false },
+	"include": ["js/**/*.js", "lib/gota/dist/gota.d.ts"]
+}

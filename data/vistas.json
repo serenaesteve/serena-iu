@@ -9,6 +9,7 @@
 		{ "id": "resumen", "emoji": "📊", "texto": "Resumen" }
 	],
 	"componentes": [
+		{ "id": "gota",        "emoji": "💧", "texto": "Librería gota" },
 		{ "id": "formularios", "emoji": "📝", "texto": "Formularios" },
 		{ "id": "toasts",      "emoji": "💬", "texto": "Toasts" },
 		{ "id": "dialogos",    "emoji": "🪟", "texto": "Diálogos" }

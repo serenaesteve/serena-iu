@@ -1,0 +1,401 @@
+{
+	"version": 1.1,
+	"tags": [
+		{
+			"name": "gota-campo",
+			"description": {
+				"kind": "markdown",
+				"value": "Campo de texto que indica qué dato espera y hereda la validación nativa de email, teléfono y URL.\n\n```html\n<gota-campo type=\"email\" name=\"correo\" placeholder=\"nombre@ejemplo.com\" required></gota-campo>\n```"
+			},
+			"attributes": [
+				{
+					"name": "name",
+					"description": "Nombre con el que se envía en el formulario. Por defecto: \"\"."
+				},
+				{
+					"name": "value",
+					"description": "Valor. El atributo es el valor inicial, al que vuelve con reset(); la propiedad es el valor actual. Por defecto: \"\"."
+				},
+				{
+					"name": "disabled",
+					"description": "Desactivado: no se puede usar ni se envía. Por defecto: false.",
+					"valueSet": "v"
+				},
+				{
+					"name": "required",
+					"description": "Obligatorio: vacío marca valueMissing. Por defecto: false.",
+					"valueSet": "v"
+				},
+				{
+					"name": "readonly",
+					"description": "Solo lectura: se envía, pero no se edita ni se valida. Por defecto: false.",
+					"valueSet": "v"
+				},
+				{
+					"name": "persistir",
+					"description": "Clave de localStorage donde recordar el valor entre visitas. Vacía: no se guarda. Por defecto: \"\"."
+				},
+				{
+					"name": "type",
+					"description": "Tipo de dato. Por defecto: \"text\".",
+					"values": [
+						{
+							"name": "text"
+						},
+						{
+							"name": "email"
+						},
+						{
+							"name": "tel"
+						},
+						{
+							"name": "url"
+						}
+					]
+				},
+				{
+					"name": "placeholder",
+					"description": "Texto de ayuda con el campo vacío. Por defecto: \"\"."
+				},
+				{
+					"name": "pattern",
+					"description": "Expresión regular que debe cumplir. Por defecto: \"\"."
+				},
+				{
+					"name": "minlength",
+					"description": "Longitud mínima. Por defecto: null."
+				},
+				{
+					"name": "maxlength",
+					"description": "Longitud máxima. Por defecto: null."
+				},
+				{
+					"name": "autocomplete",
+					"description": "Pista de autocompletado del navegador. Por defecto: \"off\"."
+				},
+				{
+					"name": "sin-marca",
+					"description": "Oculta el icono del tipo de dato. Por defecto: false.",
+					"valueSet": "v"
+				}
+			]
+		},
+		{
+			"name": "gota-cantidad",
+			"description": {
+				"kind": "markdown",
+				"value": "Número con botones de paso, teclado (flechas, Inicio, Fin, Re Pág, Av Pág), límites y formato de moneda. Acepta coma decimal.\n\n```html\n<gota-cantidad name=\"precio\" formato=\"moneda\" min=\"0\" step=\"0.01\" value=\"749.99\"></gota-cantidad>\n```"
+			},
+			"attributes": [
+				{
+					"name": "name",
+					"description": "Nombre con el que se envía en el formulario. Por defecto: \"\"."
+				},
+				{
+					"name": "value",
+					"description": "Valor. El atributo es el valor inicial, al que vuelve con reset(); la propiedad es el valor actual. Por defecto: \"\"."
+				},
+				{
+					"name": "disabled",
+					"description": "Desactivado: no se puede usar ni se envía. Por defecto: false.",
+					"valueSet": "v"
+				},
+				{
+					"name": "required",
+					"description": "Obligatorio: vacío marca valueMissing. Por defecto: false.",
+					"valueSet": "v"
+				},
+				{
+					"name": "readonly",
+					"description": "Solo lectura: se envía, pero no se edita ni se valida. Por defecto: false.",
+					"valueSet": "v"
+				},
+				{
+					"name": "persistir",
+					"description": "Clave de localStorage donde recordar el valor entre visitas. Vacía: no se guarda. Por defecto: \"\"."
+				},
+				{
+					"name": "min",
+					"description": "Valor mínimo. Sin él no hay límite. Por defecto: null."
+				},
+				{
+					"name": "max",
+					"description": "Valor máximo. Sin él no hay límite. Por defecto: null."
+				},
+				{
+					"name": "step",
+					"description": "Tamaño del paso. Con «any» no comprueba múltiplos. Por defecto: \"1\"."
+				},
+				{
+					"name": "formato",
+					"description": "Cómo se muestra el valor al salir del campo. Por defecto: \"numero\".",
+					"values": [
+						{
+							"name": "numero"
+						},
+						{
+							"name": "moneda"
+						}
+					]
+				},
+				{
+					"name": "moneda",
+					"description": "Código ISO de la moneda. Por defecto: \"EUR\"."
+				},
+				{
+					"name": "unidad",
+					"description": "Unidad junto al número, como «uds.». Por defecto: \"\"."
+				},
+				{
+					"name": "placeholder",
+					"description": "Texto de ayuda con el campo vacío. Por defecto: \"\"."
+				},
+				{
+					"name": "locale",
+					"description": "Idioma del formato. Por defecto: \"es-ES\"."
+				}
+			]
+		},
+		{
+			"name": "gota-selector",
+			"description": {
+				"kind": "markdown",
+				"value": "Lista desplegable que se filtra escribiendo, sin distinguir acentos ni mayúsculas. Las opciones se dan con <option> o con la propiedad opciones.\n\n```html\n<gota-selector name=\"categoria\"><option>Informática</option><option>Telefonía</option></gota-selector>\n```"
+			},
+			"attributes": [
+				{
+					"name": "name",
+					"description": "Nombre con el que se envía en el formulario. Por defecto: \"\"."
+				},
+				{
+					"name": "value",
+					"description": "Valor. El atributo es el valor inicial, al que vuelve con reset(); la propiedad es el valor actual. Por defecto: \"\"."
+				},
+				{
+					"name": "disabled",
+					"description": "Desactivado: no se puede usar ni se envía. Por defecto: false.",
+					"valueSet": "v"
+				},
+				{
+					"name": "required",
+					"description": "Obligatorio: vacío marca valueMissing. Por defecto: false.",
+					"valueSet": "v"
+				},
+				{
+					"name": "readonly",
+					"description": "Solo lectura: se envía, pero no se edita ni se valida. Por defecto: false.",
+					"valueSet": "v"
+				},
+				{
+					"name": "persistir",
+					"description": "Clave de localStorage donde recordar el valor entre visitas. Vacía: no se guarda. Por defecto: \"\"."
+				},
+				{
+					"name": "placeholder",
+					"description": "Texto cuando no hay nada elegido. Por defecto: \"Selecciona…\"."
+				},
+				{
+					"name": "sin-resultados",
+					"description": "Texto cuando el filtro no encuentra nada. Por defecto: \"No hay coincidencias\"."
+				}
+			]
+		},
+		{
+			"name": "gota-fecha",
+			"description": {
+				"kind": "markdown",
+				"value": "Fecha con calendario desplegable, que también se puede escribir (15/3/1990). El valor siempre es AAAA-MM-DD, como en un input date.\n\n```html\n<gota-fecha name=\"alta\" min=\"2026-01-01\" value=\"2026-10-30\"></gota-fecha>\n```"
+			},
+			"attributes": [
+				{
+					"name": "name",
+					"description": "Nombre con el que se envía en el formulario. Por defecto: \"\"."
+				},
+				{
+					"name": "value",
+					"description": "Valor. El atributo es el valor inicial, al que vuelve con reset(); la propiedad es el valor actual. Por defecto: \"\"."
+				},
+				{
+					"name": "disabled",
+					"description": "Desactivado: no se puede usar ni se envía. Por defecto: false.",
+					"valueSet": "v"
+				},
+				{
+					"name": "required",
+					"description": "Obligatorio: vacío marca valueMissing. Por defecto: false.",
+					"valueSet": "v"
+				},
+				{
+					"name": "readonly",
+					"description": "Solo lectura: se envía, pero no se edita ni se valida. Por defecto: false.",
+					"valueSet": "v"
+				},
+				{
+					"name": "persistir",
+					"description": "Clave de localStorage donde recordar el valor entre visitas. Vacía: no se guarda. Por defecto: \"\"."
+				},
+				{
+					"name": "min",
+					"description": "Fecha mínima (AAAA-MM-DD). Por defecto: \"\"."
+				},
+				{
+					"name": "max",
+					"description": "Fecha máxima (AAAA-MM-DD). Por defecto: \"\"."
+				},
+				{
+					"name": "placeholder",
+					"description": "Texto de ayuda con el campo vacío. Por defecto: \"dd/mm/aaaa\"."
+				},
+				{
+					"name": "locale",
+					"description": "Idioma del calendario. Por defecto: \"es-ES\"."
+				}
+			]
+		},
+		{
+			"name": "gota-interruptor",
+			"description": {
+				"kind": "markdown",
+				"value": "Interruptor para valores de sí o no. La gota cruza el canal y se estira al hacerlo. Se usa igual que una casilla: propiedad checked y evento change.\n\n```html\n<gota-interruptor name=\"activo\" checked></gota-interruptor>\n```"
+			},
+			"attributes": [
+				{
+					"name": "name",
+					"description": "Nombre con el que se envía en el formulario. Por defecto: \"\"."
+				},
+				{
+					"name": "value",
+					"description": "Valor que se envía cuando está activado. Por defecto: \"on\"."
+				},
+				{
+					"name": "disabled",
+					"description": "Desactivado: no se puede usar ni se envía. Por defecto: false.",
+					"valueSet": "v"
+				},
+				{
+					"name": "required",
+					"description": "Obligatorio: vacío marca valueMissing. Por defecto: false.",
+					"valueSet": "v"
+				},
+				{
+					"name": "readonly",
+					"description": "Solo lectura: se envía, pero no se edita ni se valida. Por defecto: false.",
+					"valueSet": "v"
+				},
+				{
+					"name": "persistir",
+					"description": "Clave de localStorage donde recordar el valor entre visitas. Vacía: no se guarda. Por defecto: \"\"."
+				},
+				{
+					"name": "checked",
+					"description": "Activado. El atributo es el estado inicial, al que vuelve con reset(); la propiedad es el estado actual. Por defecto: false.",
+					"valueSet": "v"
+				}
+			]
+		},
+		{
+			"name": "gota-clave",
+			"description": {
+				"kind": "markdown",
+				"value": "Envuelve un <input type=\"password\"> real, que se queda en el HTML de la página para que los gestores de contraseñas lo encuentren. Añade mostrar y ocultar y, si se pide, un medidor de fuerza.\n\n```html\n<gota-clave medidor><input name=\"clave\" type=\"password\" autocomplete=\"new-password\"></gota-clave>\n```"
+			},
+			"attributes": [
+				{
+					"name": "medidor",
+					"description": "Muestra el medidor de fuerza. Por defecto: false.",
+					"valueSet": "v"
+				},
+				{
+					"name": "minimo",
+					"description": "Longitud mínima que pide el medidor. Por defecto: 8."
+				},
+				{
+					"name": "visible",
+					"description": "La contraseña se ve en claro. Por defecto: false.",
+					"valueSet": "v"
+				}
+			]
+		},
+		{
+			"name": "gota-filtros",
+			"description": {
+				"kind": "markdown",
+				"value": "Barra de filtros con una sola gota: al elegir otro, la gota viaja hasta él. Cada filtro puede llevar un punto de color y una cantidad.\n\n```html\n<gota-filtros etiqueta=\"Tipo de cliente\"></gota-filtros>\n```"
+			},
+			"attributes": [
+				{
+					"name": "value",
+					"description": "Valor del filtro elegido. Por defecto: \"\"."
+				},
+				{
+					"name": "etiqueta",
+					"description": "Nombre del grupo para los lectores de pantalla. Por defecto: \"Filtros\"."
+				}
+			]
+		},
+		{
+			"name": "gota-paginador",
+			"description": {
+				"kind": "markdown",
+				"value": "Paginación numerada que resume los saltos largos con puntos suspensivos. La gota marca la página actual.\n\n```html\n<gota-paginador pagina=\"3\" paginas=\"12\"></gota-paginador>\n```"
+			},
+			"attributes": [
+				{
+					"name": "pagina",
+					"description": "Página actual, desde 1. Por defecto: 1."
+				},
+				{
+					"name": "paginas",
+					"description": "Total de páginas. Por defecto: 1."
+				},
+				{
+					"name": "vecinas",
+					"description": "Páginas que se ven a cada lado de la actual. Por defecto: 1."
+				},
+				{
+					"name": "etiqueta",
+					"description": "Nombre para los lectores de pantalla. Por defecto: \"Paginación\"."
+				}
+			]
+		},
+		{
+			"name": "gota-nivel",
+			"description": {
+				"kind": "markdown",
+				"value": "Enseña una cantidad como el líquido de un tubo, con una marca de mínimo y un estado que cambia de color: agotado, bajo, normal o lleno.\n\n```html\n<gota-nivel value=\"7\" max=\"60\" minimo=\"10\" unidad=\"uds.\"></gota-nivel>\n```"
+			},
+			"attributes": [
+				{
+					"name": "value",
+					"description": "Cantidad actual. Por defecto: 0."
+				},
+				{
+					"name": "max",
+					"description": "Cantidad con la que el tubo está lleno. Por defecto: 100."
+				},
+				{
+					"name": "minimo",
+					"description": "Por debajo de esta cantidad el estado es «bajo». Con 0 no hay marca. Por defecto: 0."
+				},
+				{
+					"name": "unidad",
+					"description": "Unidad junto a la cifra. Por defecto: \"\"."
+				},
+				{
+					"name": "vertical",
+					"description": "Tubo de pie, como una probeta. Por defecto: false.",
+					"valueSet": "v"
+				},
+				{
+					"name": "sin-cifra",
+					"description": "Oculta el número. Por defecto: false.",
+					"valueSet": "v"
+				},
+				{
+					"name": "etiqueta",
+					"description": "Nombre para los lectores de pantalla. Por defecto: \"Nivel\"."
+				}
+			]
+		}
+	]
+}

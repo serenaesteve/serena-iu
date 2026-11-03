@@ -324,6 +324,7 @@ Después hay que abrir `http://localhost:8000` en **Chrome o Edge** (Firefox no 
 - **Cámara y micrófono**: el navegador pide permiso la primera vez. Solo funcionan en `localhost` o con `https`.
 - **Ollama** (opcional, para las preguntas libres): `ollama serve` y un modelo instalado, por ejemplo `ollama pull phi3:mini`. Si el modelo elegido no está, se usa otro de los instalados. Sin Ollama, todo lo demás funciona igual.
 - Con `python3 -m http.server 8000` también funciona: si no hay PHP, la aplicación se conecta directamente a Ollama en `localhost:11434`.
+- **En la web publicada** (https://iu.serenaesteve.com), `ollama.php` solo ofrece modelos pequeños y limita cada visitante a 5 preguntas por minuto y 60 al día. Si alguien llega al límite, el asistente le dice cuánto tiene que esperar, y las órdenes habituales siguen funcionando porque las entiende la propia aplicación. En local no hay límites.
 
 ## Pruebas realizadas
 

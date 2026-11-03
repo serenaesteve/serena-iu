@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>gota · pruebas unitarias</title>
+	<style>
+		:root{color-scheme:light dark;--bien:oklch(.55 .13 160);--mal:oklch(.55 .19 25);}
+		body{margin:0 auto;max-width:860px;padding:24px 16px 64px;font:15px/1.5 ui-monospace,Menlo,Consolas,monospace;}
+		h1{font-size:18px;margin:0 0 4px;}
+		#resumen{margin:0 0 24px;font-size:22px;font-weight:700;}
+		h2{font-size:15px;margin:20px 0 4px;}
+		ol{margin:0;padding-left:32px;}
+		.bien{color:var(--bien);}
+		.mal{color:var(--mal);}
+		li.bien::marker{content:"✓  ";}
+		li.mal::marker{content:"✗  ";}
+		li.bien{color:inherit;opacity:.8;}
+		#zona{position:fixed;left:0;top:0;width:520px;opacity:0;pointer-events:none;}
+		/* Las pruebas de accesibilidad necesitan los componentes visibles para medir el contraste */
+		.lienzo-accesible{display:grid;gap:16px;max-width:520px;padding:16px;background:Canvas;color:CanvasText;font:15px/1.4 system-ui,sans-serif;}
+		.lienzo-accesible label{display:grid;gap:6px;}
+	</style>
+	<!-- ?paquete=ruta prueba otra copia de la librería, por ejemplo la que sale del .tgz -->
+	<script>
+		const paquete = (new URLSearchParams(location.search).get("paquete") || "../dist/gota.js").replace(/[^\w./\-]/g, "");
+		// Carpeta dist/ de la copia que se prueba y raíz de la librería (para los temas)
+		window.carpetaDist = paquete.replace(/[^/]*$/, "");
+		const raiz = window.carpetaDist.replace(/dist\/$/, "");
+		document.write(`<script src="${paquete}"><\/script><link rel="stylesheet" href="${raiz}temas/agua.css">`);
+	</script>
+	<script src="terceros/axe.min.js"></script>
+	<script src="arnes.js"></script>
+</head>
+<body>
+	<h1>gota · pruebas unitarias</h1>
+	<p id="resumen">Ejecutando…</p>
+	<div id="resultados"></div>
+	<div id="zona"></div>
+	<script src="generales.pruebas.js"></script>
+	<script src="controles.pruebas.js"></script>
+	<script src="componentes.pruebas.js"></script>
+	<script src="herramientas.pruebas.js"></script>
+	<script src="accesibilidad.pruebas.js"></script>
+	<script>arnes.ejecutar();</script>
+</body>
+</html>

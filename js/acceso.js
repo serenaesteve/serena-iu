@@ -1,6 +1,7 @@
 /**
  * serena | iu · acceso
- * Pestañas, validación, mostrar contraseña, medidor de fuerza y sesión.
+ * Pestañas, validación y sesión. Mostrar la contraseña y el medidor de fuerza
+ * los pone el componente <gota-clave> de la librería gota.
  */
 (() => {
 	"use strict";
@@ -22,8 +23,6 @@
 
 			await Sesion.prepararDemo();
 			this.activarPestanas();
-			this.activarVerClave();
-			this.activarFuerza();
 			this.formEntrar.addEventListener("submit", (evento) => this.entrar(evento));
 			this.formRegistro.addEventListener("submit", (evento) => this.registrar(evento));
 			this.formEntrar.elements.email.focus();
@@ -52,49 +51,6 @@
 						mostrar(siguiente);
 					}
 				});
-			});
-		}
-
-		activarVerClave() {
-			DOM.todos("[data-accion=ver]").forEach((boton) => {
-				boton.addEventListener("click", () => {
-					const entrada = boton.previousElementSibling;
-					const visible = entrada.type === "text";
-					entrada.type = visible ? "password" : "text";
-					boton.textContent = visible ? "Mostrar" : "Ocultar";
-					boton.setAttribute("aria-pressed", String(!visible));
-				});
-			});
-		}
-
-		static fuerza(clave) {
-			let puntos = 0;
-			if (clave.length >= 8) { puntos++; }
-			if (clave.length >= 12) { puntos++; }
-			if (/[A-Z]/.test(clave) && /[a-z]/.test(clave)) { puntos++; }
-			if (/\d/.test(clave)) { puntos++; }
-			if (/[^A-Za-z0-9]/.test(clave)) { puntos++; }
-			return puntos;
-		}
-
-		activarFuerza() {
-			const entrada = this.formRegistro.elements.clave;
-			const barra = DOM.uno(".fuerza span", this.formRegistro);
-			const texto = DOM.uno(".fuerza-texto", this.formRegistro);
-			const niveles = [
-				["Mínimo 8 caracteres.", "var(--peligro)"],
-				["Débil", "var(--peligro)"],
-				["Mejorable", "var(--aviso)"],
-				["Aceptable", "var(--aviso)"],
-				["Buena", "var(--exito)"],
-				["Muy buena", "var(--exito)"]
-			];
-
-			entrada.addEventListener("input", () => {
-				const puntos = entrada.value ? Math.max(1, AccesoIU.fuerza(entrada.value)) : 0;
-				barra.style.width = `${(puntos / 5) * 100}%`;
-				barra.style.background = niveles[puntos][1];
-				texto.textContent = entrada.value.length < 8 ? niveles[0][0] : niveles[puntos][0];
 			});
 		}
 

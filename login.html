@@ -5,9 +5,10 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	<title>Acceso · serena | iu</title>
 	<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%23FF5FA2'/><stop offset='1' stop-color='%23B517E8'/></linearGradient></defs><rect width='32' height='32' rx='10' fill='url(%23g)'/><text x='16' y='23' font-size='19' text-anchor='middle' fill='white' font-family='Georgia' font-style='italic' font-weight='700'>s</text></svg>">
-	<link rel="stylesheet" href="css/estilo.css">
-	<script src="js/nucleo.js"></script>
-	<script src="js/acceso.js" defer></script>
+	<link rel="stylesheet" href="css/estilo.css?v=0e035ae605">
+	<script src="js/nucleo.js?v=f4086f1804"></script>
+	<script src="lib/gota/dist/gota.js?v=04bf73e063" defer></script>
+	<script src="js/acceso.js?v=6901b86910" defer></script>
 </head>
 <body class="acceso">
 
@@ -84,13 +85,11 @@
 					</label>
 					<label class="campo">
 						<span>Contraseña</span>
-						<span class="campo-clave">
-							<input name="clave" type="password" autocomplete="current-password" required>
-							<button type="button" data-accion="ver">Mostrar</button>
-						</span>
+						<!-- gota-clave envuelve el input real: los gestores de contraseñas lo siguen encontrando -->
+						<gota-clave><input name="clave" type="password" autocomplete="current-password" required></gota-clave>
 					</label>
 					<label class="campo campo-check">
-						<input name="recordar" type="checkbox">
+						<gota-interruptor name="recordar"></gota-interruptor>
 						<span>Mantener la sesión iniciada</span>
 					</label>
 					<button class="boton primario" type="submit">Entrar</button>
@@ -112,16 +111,11 @@
 					</label>
 					<label class="campo">
 						<span>Contraseña</span>
-						<span class="campo-clave">
-							<input name="clave" type="password" autocomplete="new-password" minlength="8" required>
-							<button type="button" data-accion="ver">Mostrar</button>
-						</span>
-						<span class="fuerza" aria-hidden="true"><span></span></span>
-						<span class="fuerza-texto">Mínimo 8 caracteres.</span>
+						<gota-clave medidor minimo="8"><input name="clave" type="password" autocomplete="new-password" minlength="8" required></gota-clave>
 					</label>
 					<label class="campo">
 						<span>Repite la contraseña</span>
-						<input name="repetir" type="password" autocomplete="new-password" required>
+						<gota-clave><input name="repetir" type="password" autocomplete="new-password" required></gota-clave>
 					</label>
 					<button class="boton primario" type="submit">Crear cuenta</button>
 				</div>

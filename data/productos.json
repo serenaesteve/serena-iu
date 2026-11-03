@@ -57,7 +57,8 @@
 			"etiqueta": "Stock",
 			"tipo": "number",
 			"min": 0,
-			"listado": true
+			"listado": true,
+			"nivel": { "max": 60, "minimo": 5, "unidad": "uds." }
 		},
 		{
 			"nombre": "fecha_alta",

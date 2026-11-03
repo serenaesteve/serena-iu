@@ -370,7 +370,18 @@
 	   GESTOS: la mano maneja la interfaz como si fuera un ratón
 	   ========================================================= */
 	class GestosIU {
-		static CLICABLES = "button,a[href],input,select,textarea,label,summary,[role=link],[role=tab],[role=option],tr[data-id],th.ordenable,li[data-indice]";
+		static CLICABLES = "button,a[href],input,select,textarea,label,summary,[role=link],[role=tab],[role=option],tr[data-id],th.ordenable,li[data-indice],[part]";
+
+		/** Lo que hay bajo el punto, entrando en el shadow DOM de los componentes de gota */
+		static elementoEn(x, y) {
+			let elemento = document.elementFromPoint(x, y);
+			while (elemento?.shadowRoot) {
+				const dentro = elemento.shadowRoot.elementFromPoint(x, y);
+				if (!dentro || dentro === elemento) { break; }
+				elemento = dentro;
+			}
+			return elemento;
+		}
 
 		constructor(natural) {
 			this.natural = natural;
@@ -518,7 +529,9 @@
 		}
 
 		marcarSobre(x, y) {
-			const elemento = document.elementFromPoint(x, y)?.closest(GestosIU.CLICABLES) || null;
+			let elemento = GestosIU.elementoEn(x, y)?.closest(GestosIU.CLICABLES) || null;
+			// El CSS de la página no entra en el shadow DOM: se resalta el componente entero
+			if (elemento?.getRootNode() instanceof ShadowRoot) { elemento = elemento.getRootNode().host; }
 			if (elemento === this.sobre) { return; }
 			this.sobre?.classList.remove("natural-sobre");
 			elemento?.classList.add("natural-sobre");
@@ -526,7 +539,7 @@
 		}
 
 		clic(x, y) {
-			const elemento = document.elementFromPoint(x, y);
+			const elemento = GestosIU.elementoEn(x, y);
 			if (!elemento) { return; }
 
 			const objetivo = elemento.closest(GestosIU.CLICABLES) || elemento;
@@ -756,6 +769,7 @@
 		constructor() {
 			this.via = null;
 			this.modelos = [];
+			this.limites = null;
 		}
 
 		async comprobar() {
@@ -764,6 +778,7 @@
 				if (datos.ok) {
 					this.via = "php";
 					this.modelos = datos.modelos;
+					this.limites = datos.limites ?? null; // en la web pública: { porMinuto, porDia }
 					return true;
 				}
 			} catch (error) { /* sin PHP el servidor devuelve el código fuente y no es JSON */ }
@@ -800,7 +815,11 @@
 					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({ mensaje, sistema, modelo, formato: "json" })
 				});
-				if (!respuesta.ok) { throw new Error(`ollama.php (${respuesta.status})`); }
+				if (!respuesta.ok) {
+					// Límite de la versión pública, pregunta muy larga, modelo ocupado…: el servidor explica qué pasa
+					const datos = await respuesta.json().catch(() => ({}));
+					throw Object.assign(new Error(`ollama.php (${respuesta.status})`), { paraUsuario: datos.respuesta });
+				}
 				return (await respuesta.json()).respuesta;
 			}
 
@@ -1330,7 +1349,8 @@ ${datos}`;
 				case "number": return DictadoIU.numero(valor);
 				case "date": return DictadoIU.fecha(limpio);
 				case "select": {
-					const opciones = [...control.options].map((o) => o.value).filter(Boolean);
+					// gota-selector expone sus opciones como datos; un <select> nativo, como <option>
+					const opciones = (control.opciones ? control.opciones.map((o) => o.valor ?? o) : [...control.options].map((o) => o.value)).filter(Boolean);
 					return opciones.find((o) => TextoNatural.limpiar(o) === limpio) || TextoNatural.mejorCoincidencia(opciones, (o) => o, limpio);
 				}
 				default: return valor ? valor.charAt(0).toUpperCase() + valor.slice(1) : null;
@@ -1339,7 +1359,7 @@ ${datos}`;
 
 		/** Escribe el valor y lanza los mismos eventos que el teclado: validación, cálculos y aviso de cambios */
 		aplicar(control, valor) {
-			if (control.type === "checkbox") { control.checked = valor; } else { control.value = valor; }
+			if (typeof valor === "boolean") { control.checked = valor; } else { control.value = valor; }
 			control.dispatchEvent(new Event("input", { bubbles: true }));
 			control.dispatchEvent(new Event("change", { bubbles: true }));
 
@@ -2033,7 +2053,7 @@ ${datos}`;
 					orden = await this.interprete.preguntarIA(texto);
 				} catch (error) {
 					console.warn(error);
-					orden = { accion: "responder", respuesta: "No te he entendido y el modelo local (Ollama) no responde. Di «ayuda» para ver lo que sé hacer." };
+					orden = { accion: "responder", respuesta: error.paraUsuario || "No te he entendido y el modelo local (Ollama) no responde. Di «ayuda» para ver lo que sé hacer." };
 				}
 				this.reflejarVoz();
 			}
@@ -2495,9 +2515,9 @@ ${datos}`;
 					<button class="boton" type="button" data-accion="manos-libres" aria-pressed="false">👂 Manos libres</button>
 				</div>
 				<p class="transcripcion" aria-live="polite"><span class="transcripcion-texto provisional">Aquí aparece lo que voy entendiendo…</span></p>
-				<label class="campo"><span>Palabra clave para manos libres</span><input id="palabraClave" type="text" autocomplete="off"></label>
-				<label class="campo campo-check"><input id="hablarRespuestas" type="checkbox"><span>Leer las respuestas en voz alta</span></label>
-				<label class="campo"><span>Voz</span><select id="vozElegida"></select></label>
+				<label class="campo"><span>Palabra clave para manos libres</span><gota-campo id="palabraClave"></gota-campo></label>
+				<label class="campo campo-check"><gota-interruptor id="hablarRespuestas"></gota-interruptor><span>Leer las respuestas en voz alta</span></label>
+				<label class="campo"><span>Voz</span><gota-selector id="vozElegida"></gota-selector></label>
 				<div class="ajuste"><label for="velocidadVoz">Velocidad <output></output></label><input id="velocidadVoz" type="range" min="0.5" max="2" step="0.1"></div>
 				<div class="ajuste"><label for="tonoVoz">Tono <output></output></label><input id="tonoVoz" type="range" min="0" max="2" step="0.1"></div>
 				<div class="ajuste"><label for="volumenVoz">Volumen <output></output></label><input id="volumenVoz" type="range" min="0" max="1" step="0.1"></div>
@@ -2507,15 +2527,15 @@ ${datos}`;
 				${estado(this.vision.activa, this.vision.activa ? "Cámara encendida · MediaPipe analizando manos y cara" : "Cámara apagada")}
 				<p>La imagen se analiza en este navegador con MediaPipe: no se envía a ningún servidor.</p>
 				<div class="fila-botones"><button class="boton primario" type="button" data-accion="camara"></button></div>
-				<label class="campo campo-check"><input id="gestosCabeza" type="checkbox"><span>Confirmar los diálogos asintiendo o negando con la cabeza</span></label>
-				<label class="campo campo-check"><input id="gestosPrivacidad" type="checkbox"><span>Ocultar los datos si me voy de delante de la cámara</span></label>
+				<label class="campo campo-check"><gota-interruptor id="gestosCabeza"></gota-interruptor><span>Confirmar los diálogos asintiendo o negando con la cabeza</span></label>
+				<label class="campo campo-check"><gota-interruptor id="gestosPrivacidad"></gota-interruptor><span>Ocultar los datos si me voy de delante de la cámara</span></label>
 				<div class="ajuste"><label for="suavizado">Rapidez del cursor <output></output></label><input id="suavizado" type="range" min="0.1" max="0.8" step="0.05"></div>`);
 
 			const ia = app.tarjeta("✦ Asistente", `
 				<p class="estado-texto" id="estadoOllama" data-ok="null">Comprobando el modelo local…</p>
 				<p>Las órdenes y preguntas habituales las entiende la propia aplicación. Lo demás se lo pregunta a un modelo local de Ollama junto con los datos, y la aplicación comprueba su respuesta antes de hacer nada.</p>
-				<label class="campo campo-check"><input id="usarIA" type="checkbox"><span>Preguntar a Ollama lo que no entienda</span></label>
-				<label class="campo"><span>Modelo</span><input id="modeloIA" type="text" list="modelosIA" autocomplete="off"><datalist id="modelosIA"></datalist></label>`);
+				<label class="campo campo-check"><gota-interruptor id="usarIA"></gota-interruptor><span>Preguntar a Ollama lo que no entienda</span></label>
+				<label class="campo"><span>Modelo</span><gota-campo id="modeloIA" placeholder="phi3:mini"></gota-campo></label>`);
 
 			const rejilla = document.createElement("div");
 			rejilla.className = "rejilla";
@@ -2573,34 +2593,24 @@ ${datos}`;
 		async comprobarOllama() {
 			const ok = await this.ollama.comprobar();
 			const estado = DOM.uno("#estadoOllama");
-			const lista = DOM.uno("#modelosIA");
 			if (!estado) { return; }
 
 			estado.dataset.ok = String(ok);
 			const via = this.ollama.via === "php" ? "con ollama.php" : "directo a localhost:11434";
+			const limites = this.ollama.limites;
 			estado.textContent = ok
-				? `Modelo local conectado ${via} · usa ${this.ollama.modeloDisponible(this.ajustes.modelo)}`
+				? `Modelo local conectado ${via} · usa ${this.ollama.modeloDisponible(this.ajustes.modelo)} · ${limites ? "disponibles en la web pública" : "instalados"}: ${this.ollama.modelos.filter((m) => !/embed/i.test(m)).join(", ")}`
+					+ (limites ? ` · límite: ${limites.porMinuto} preguntas por minuto y ${limites.porDia} al día` : "")
 				: "Ollama no responde: las órdenes habituales funcionan igual; para las preguntas libres arranca «ollama serve».";
-
-			lista.innerHTML = "";
-			this.ollama.modelos.forEach((nombre) => {
-				const opcion = document.createElement("option");
-				opcion.value = nombre;
-				lista.appendChild(opcion);
-			});
 		}
 
 		rellenarVoces() {
 			const selector = DOM.uno("#vozElegida");
 			if (!selector) { return; }
 
-			selector.innerHTML = '<option value="">La del sistema (es-ES)</option>';
-			this.voz.voces().forEach((voz) => {
-				const opcion = document.createElement("option");
-				opcion.value = voz.name;
-				opcion.textContent = `${voz.name} · ${voz.lang}`;
-				selector.appendChild(opcion);
-			});
+			selector.opciones = [{ valor: "", texto: "La del sistema (es-ES)" }].concat(
+				this.voz.voces().map((voz) => ({ valor: voz.name, texto: `${voz.name} · ${voz.lang}` }))
+			);
 			selector.value = this.ajustes.voz;
 		}
 	}

@@ -1,0 +1,4 @@
+{
+	// Autocompletado de las etiquetas y atributos de gota en los .html
+	"html.customData": ["./lib/gota/dist/gota.html-data.json"]
+}

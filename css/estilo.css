@@ -457,7 +457,6 @@ td.acciones .boton[data-accion=borrar]:hover{background:var(--peligro);color:whi
 .vacio strong{display:block;color:var(--tinta);font-size:15px;margin-bottom:4px;}
 
 .paginacion{display:flex;justify-content:space-between;align-items:center;gap:var(--relleno);margin-top:12px;color:var(--tinta-suave);}
-.paginacion .fila-botones{margin:0;}
 
 /* ---------------------------------------------------------
    7. FORMULARIOS
@@ -493,8 +492,6 @@ td.acciones .boton[data-accion=borrar]:hover{background:var(--peligro);color:whi
 .ajuste input[type=range]{accent-color:var(--acento);}
 .muestras{display:flex;gap:8px;margin-top:10px;}
 .muestras span{width:34px;height:34px;border-radius:50%;border:1px solid var(--borde-cristal);box-shadow:inset 0 1px 0 var(--reflejo);}
-.selector-modo{display:flex;gap:8px;}
-.selector-modo .boton[aria-pressed="true"]{background:var(--acento-degradado);color:white;}
 .punto{width:10px;height:10px;border-radius:50%;display:inline-block;box-shadow:inset 0 -1px 2px hsla(0,0%,0%,.3);}
 
 /* ---------------------------------------------------------
@@ -680,15 +677,6 @@ body.acceso{min-height:100vh;display:grid;place-items:center;padding:32px 24px;o
 .pista-demo{margin-top:18px;padding:10px 14px;background:var(--boton);border:1px solid var(--borde-cristal);border-radius:var(--radio-medio);color:var(--tinta-suave);font-size:12px;line-height:1.5;}
 .pista-demo code{color:var(--tinta);}
 
-.campo-clave{position:relative;display:flex;}
-.campo-clave input{padding-right:74px;}
-.campo-clave button{
-	position:absolute;right:8px;top:50%;transform:translateY(-50%);
-	border:0;background:none;color:var(--tinta-suave);cursor:pointer;font-size:12px;padding:4px 6px;
-}
-.fuerza{height:5px;background:var(--campo);border-radius:999px;overflow:hidden;margin-top:2px;}
-.fuerza span{display:block;height:100%;width:0;border-radius:999px;background:var(--peligro);transition:width .3s,background .3s;}
-.fuerza-texto{font-size:12px;color:var(--tinta-suave);font-weight:400;}
 .mensaje-formulario{margin:0;padding:10px 14px;border-radius:var(--radio-medio);background:hsl(355,80%,60%,.15);color:var(--peligro);}
 .mensaje-formulario:empty{display:none;}
 
@@ -717,27 +705,6 @@ body.acceso{min-height:100vh;display:grid;place-items:center;padding:32px 24px;o
 }
 .avatar.grande{width:52px;height:52px;font-size:18px;}
 .con-avatar{display:inline-flex;align-items:center;gap:10px;font-weight:500;white-space:nowrap;}
-
-.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
-.chip{
-	--h:var(--tono);
-	display:inline-flex;align-items:center;gap:8px;
-	padding:6px 8px 6px 14px;border-radius:999px;
-	border:1px solid var(--borde-cristal);
-	background:var(--boton);
-	color:var(--tinta-suave);
-	cursor:pointer;
-	transition:background .2s,color .2s,border-color .2s;
-}
-.chip:hover{background:var(--boton-hover);color:var(--tinta);}
-.chip-cantidad{min-width:22px;padding:1px 7px;border-radius:999px;background:var(--campo);font-size:11px;text-align:center;font-variant-numeric:tabular-nums;}
-.chip[aria-pressed="true"]{
-	color:var(--tinta);
-	background:hsl(var(--h),80%,60%,.2);
-	border-color:hsl(var(--h),80%,62%,.5);
-	box-shadow:inset 0 1px 0 var(--reflejo),0 4px 14px hsl(var(--h),80%,50%,.2);
-}
-.chip.con-color .chip-texto::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:7px;background:hsl(var(--h),85%,62%);vertical-align:1px;}
 
 tbody tr[data-id]{cursor:pointer;}
 
@@ -1097,3 +1064,41 @@ body.ar-abierta .camara-natural{display:none;}
 	.camara-natural{width:150px;right:8px;bottom:8px;}
 	body:has(.camara-natural:not(.minimizada)) .toast-pila{bottom:200px;}
 }
+
+/* ---------------------------------------------------------
+   15. COMPONENTES GOTA (RA3)
+   La librería trae su propio tema; aquí se le pasan las
+   variables de serena | iu, así que los componentes cambian
+   con el tono y con el modo claro u oscuro igual que el resto.
+   --------------------------------------------------------- */
+:root{
+	--gota-acento:var(--acento);
+	--gota-acento-suave:var(--acento-suave);
+	--gota-sobre-acento:white;
+	--gota-tinta:var(--tinta);
+	--gota-tinta-suave:var(--tinta-suave);
+	--gota-campo:var(--campo);
+	--gota-campo-foco:var(--campo-foco);
+	--gota-panel:var(--opaco-tabla);
+	--gota-linea:var(--linea);
+	--gota-boton:var(--boton);
+	--gota-boton-hover:var(--boton-hover);
+	--gota-sombra:var(--sombra);
+	--gota-sombra-campo:inset 0 1px 3px hsl(var(--tono),40%,2%,.3);
+	--gota-peligro:var(--peligro);
+	--gota-aviso:var(--aviso);
+	--gota-exito:var(--exito);
+	--gota-radio:var(--radio-medio);
+	--gota-radio-panel:var(--radio-medio);
+	--gota-fuente:var(--fuente);
+	--gota-fuente-titulo:var(--fuente-titulo);
+	--gota-alto:42px;
+}
+:root[data-modo="claro"]{--gota-sombra-campo:inset 0 1px 2px hsl(var(--tono),40%,30%,.12);}
+/* Los componentes ocupan el ancho del campo, como los controles nativos */
+.campo > gota-campo,.campo > gota-cantidad,.campo > gota-selector,.campo > gota-fecha,.campo > gota-clave{display:block;width:100%;}
+.campo-check gota-interruptor{flex:none;}
+gota-filtros.filtros-rapidos{display:block;margin-bottom:14px;}
+td gota-nivel{min-width:120px;}
+/* El banco de pruebas de gota dentro de la app: sus títulos son etiquetas, no titulares */
+.banco-en-app .banco h3{font-family:var(--fuente);}

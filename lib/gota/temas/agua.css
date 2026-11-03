@@ -1,0 +1,39 @@
+/* gota · tema «agua clara»
+   Tema alternativo: azul agua en lugar del ciruela por defecto.
+   Se activa en cualquier contenedor con la clase .gota-tema-agua
+   (las variables se heredan dentro de los componentes). */
+.gota-tema-agua{
+	--gota-acento:oklch(.58 .13 228);
+	--gota-acento-suave:oklch(.58 .13 228 / .16);
+	--gota-sobre-acento:oklch(.99 .01 228);
+	--gota-tinta:oklch(.27 .035 240);
+	--gota-tinta-suave:oklch(.47 .03 240);
+	--gota-campo:oklch(.96 .012 228);
+	--gota-campo-foco:oklch(.985 .006 228);
+	--gota-panel:oklch(.99 .004 228);
+	--gota-linea:oklch(.27 .035 240 / .14);
+	--gota-boton:oklch(.27 .035 240 / .05);
+	--gota-boton-hover:oklch(.27 .035 240 / .1);
+	--gota-sombra:0 12px 32px oklch(.3 .05 240 / .18);
+	--gota-sombra-campo:inset 0 1px 2px oklch(.3 .05 240 / .14);
+	--gota-fuente-titulo:inherit;
+	--gota-radio:14px;
+	--gota-radio-panel:16px;
+}
+@media (prefers-color-scheme:dark){
+	.gota-tema-agua{
+		--gota-acento:oklch(.72 .12 225);
+		--gota-acento-suave:oklch(.72 .12 225 / .2);
+		--gota-sobre-acento:oklch(.2 .04 240);
+		--gota-tinta:oklch(.93 .012 228);
+		--gota-tinta-suave:oklch(.74 .02 232);
+		--gota-campo:oklch(.22 .022 240);
+		--gota-campo-foco:oklch(.25 .025 240);
+		--gota-panel:oklch(.26 .025 240);
+		--gota-linea:oklch(.93 .012 228 / .14);
+		--gota-boton:oklch(.93 .012 228 / .07);
+		--gota-boton-hover:oklch(.93 .012 228 / .14);
+		--gota-sombra:0 14px 36px oklch(.05 .02 240 / .55);
+		--gota-sombra-campo:inset 0 1px 3px oklch(.05 .02 240 / .4);
+	}
+}

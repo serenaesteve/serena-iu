@@ -1,0 +1,48 @@
+{
+	"name": "gota-componentes",
+	"version": "1.2.0",
+	"description": "Librería de componentes visuales: Web Components sin dependencias, con formularios nativos y una gota que marca la selección.",
+	"keywords": [
+		"web-components",
+		"custom-elements",
+		"formularios",
+		"ui",
+		"typescript"
+	],
+	"author": "Serena Sania Esteve",
+	"license": "MIT",
+	"type": "module",
+	"main": "./dist/gota.js",
+	"module": "./dist/gota.mjs",
+	"exports": {
+		".": {
+			"types": "./dist/gota.d.ts",
+			"import": "./dist/gota.mjs",
+			"default": "./dist/gota.js"
+		},
+		"./clasico": "./dist/gota.js",
+		"./custom-elements.json": "./dist/custom-elements.json",
+		"./html-data.json": "./dist/gota.html-data.json",
+		"./temas/agua.css": "./temas/agua.css",
+		"./banco": "./banco/banco.js"
+	},
+	"files": [
+		"dist/gota.js",
+		"dist/gota.mjs",
+		"dist/gota.d.ts",
+		"dist/custom-elements.json",
+		"dist/gota.html-data.json",
+		"temas/agua.css",
+		"docs/API.md",
+		"LEEME.md",
+		"CAMBIOS.md",
+		"banco/banco.js",
+		"banco/banco.css"
+	],
+	"scripts": {
+		"build": "python3 construir.py",
+		"test": "python3 pruebas/ejecutar.py"
+	},
+	"types": "./dist/gota.d.ts",
+	"customElements": "./dist/custom-elements.json"
+}

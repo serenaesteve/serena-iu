@@ -1,0 +1,2589 @@
+{
+	"schemaVersion": "2.1.0",
+	"readme": "gota 1.2.0",
+	"modules": [
+		{
+			"kind": "javascript-module",
+			"path": "dist/gota.mjs",
+			"declarations": [
+				{
+					"kind": "class",
+					"name": "GotaCampo",
+					"tagName": "gota-campo",
+					"customElement": true,
+					"description": "Campo de texto que indica qué dato espera y hereda la validación nativa de email, teléfono y URL.",
+					"superclass": {
+						"name": "GotaControl",
+						"module": "dist/gota.mjs"
+					},
+					"attributes": [
+						{
+							"name": "name",
+							"fieldName": "name",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"\"",
+							"description": "Nombre con el que se envía en el formulario."
+						},
+						{
+							"name": "value",
+							"fieldName": "value",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"\"",
+							"description": "Valor. El atributo es el valor inicial, al que vuelve con reset(); la propiedad es el valor actual."
+						},
+						{
+							"name": "disabled",
+							"fieldName": "disabled",
+							"type": {
+								"text": "boolean"
+							},
+							"default": "false",
+							"description": "Desactivado: no se puede usar ni se envía."
+						},
+						{
+							"name": "required",
+							"fieldName": "required",
+							"type": {
+								"text": "boolean"
+							},
+							"default": "false",
+							"description": "Obligatorio: vacío marca valueMissing."
+						},
+						{
+							"name": "readonly",
+							"fieldName": "readonly",
+							"type": {
+								"text": "boolean"
+							},
+							"default": "false",
+							"description": "Solo lectura: se envía, pero no se edita ni se valida."
+						},
+						{
+							"name": "persistir",
+							"fieldName": "persistir",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"\"",
+							"description": "Clave de localStorage donde recordar el valor entre visitas. Vacía: no se guarda."
+						},
+						{
+							"name": "type",
+							"fieldName": "type",
+							"type": {
+								"text": "\"text\" | \"email\" | \"tel\" | \"url\""
+							},
+							"default": "\"text\"",
+							"description": "Tipo de dato."
+						},
+						{
+							"name": "placeholder",
+							"fieldName": "placeholder",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"\"",
+							"description": "Texto de ayuda con el campo vacío."
+						},
+						{
+							"name": "pattern",
+							"fieldName": "pattern",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"\"",
+							"description": "Expresión regular que debe cumplir."
+						},
+						{
+							"name": "minlength",
+							"fieldName": "minlength",
+							"type": {
+								"text": "number | null"
+							},
+							"default": "null",
+							"description": "Longitud mínima."
+						},
+						{
+							"name": "maxlength",
+							"fieldName": "maxlength",
+							"type": {
+								"text": "number | null"
+							},
+							"default": "null",
+							"description": "Longitud máxima."
+						},
+						{
+							"name": "autocomplete",
+							"fieldName": "autocomplete",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"off\"",
+							"description": "Pista de autocompletado del navegador."
+						},
+						{
+							"name": "sin-marca",
+							"fieldName": "sinMarca",
+							"type": {
+								"text": "boolean"
+							},
+							"default": "false",
+							"description": "Oculta el icono del tipo de dato."
+						}
+					],
+					"members": [
+						{
+							"kind": "field",
+							"name": "name",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"\"",
+							"description": "Nombre con el que se envía en el formulario.",
+							"attribute": "name"
+						},
+						{
+							"kind": "field",
+							"name": "value",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"\"",
+							"description": "Valor. El atributo es el valor inicial, al que vuelve con reset(); la propiedad es el valor actual.",
+							"attribute": "value"
+						},
+						{
+							"kind": "field",
+							"name": "disabled",
+							"type": {
+								"text": "boolean"
+							},
+							"default": "false",
+							"description": "Desactivado: no se puede usar ni se envía.",
+							"attribute": "disabled"
+						},
+						{
+							"kind": "field",
+							"name": "required",
+							"type": {
+								"text": "boolean"
+							},
+							"default": "false",
+							"description": "Obligatorio: vacío marca valueMissing.",
+							"attribute": "required"
+						},
+						{
+							"kind": "field",
+							"name": "readonly",
+							"type": {
+								"text": "boolean"
+							},
+							"default": "false",
+							"description": "Solo lectura: se envía, pero no se edita ni se valida.",
+							"attribute": "readonly"
+						},
+						{
+							"kind": "field",
+							"name": "persistir",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"\"",
+							"description": "Clave de localStorage donde recordar el valor entre visitas. Vacía: no se guarda.",
+							"attribute": "persistir"
+						},
+						{
+							"kind": "field",
+							"name": "type",
+							"type": {
+								"text": "\"text\" | \"email\" | \"tel\" | \"url\""
+							},
+							"default": "\"text\"",
+							"description": "Tipo de dato.",
+							"attribute": "type"
+						},
+						{
+							"kind": "field",
+							"name": "placeholder",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"\"",
+							"description": "Texto de ayuda con el campo vacío.",
+							"attribute": "placeholder"
+						},
+						{
+							"kind": "field",
+							"name": "pattern",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"\"",
+							"description": "Expresión regular que debe cumplir.",
+							"attribute": "pattern"
+						},
+						{
+							"kind": "field",
+							"name": "minlength",
+							"type": {
+								"text": "number | null"
+							},
+							"default": "null",
+							"description": "Longitud mínima.",
+							"attribute": "minlength"
+						},
+						{
+							"kind": "field",
+							"name": "maxlength",
+							"type": {
+								"text": "number | null"
+							},
+							"default": "null",
+							"description": "Longitud máxima.",
+							"attribute": "maxlength"
+						},
+						{
+							"kind": "field",
+							"name": "autocomplete",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"off\"",
+							"description": "Pista de autocompletado del navegador.",
+							"attribute": "autocomplete"
+						},
+						{
+							"kind": "field",
+							"name": "sinMarca",
+							"type": {
+								"text": "boolean"
+							},
+							"default": "false",
+							"description": "Oculta el icono del tipo de dato.",
+							"attribute": "sin-marca"
+						},
+						{
+							"kind": "method",
+							"name": "focus",
+							"description": "Pone el foco en el control.",
+							"parameters": [],
+							"return": {
+								"type": {
+									"text": "void"
+								}
+							}
+						},
+						{
+							"kind": "method",
+							"name": "limpiar",
+							"description": "Vacía el valor sin lanzar eventos.",
+							"parameters": [],
+							"return": {
+								"type": {
+									"text": "void"
+								}
+							}
+						},
+						{
+							"kind": "method",
+							"name": "checkValidity",
+							"description": "Devuelve si es válido.",
+							"parameters": [],
+							"return": {
+								"type": {
+									"text": "boolean"
+								}
+							}
+						},
+						{
+							"kind": "method",
+							"name": "reportValidity",
+							"description": "Devuelve si es válido y muestra el mensaje del navegador.",
+							"parameters": [],
+							"return": {
+								"type": {
+									"text": "boolean"
+								}
+							}
+						},
+						{
+							"kind": "method",
+							"name": "setCustomValidity",
+							"description": "Fija un error propio. Con texto vacío lo quita.",
+							"parameters": [
+								{
+									"name": "texto",
+									"type": {
+										"text": "string"
+									},
+									"optional": false
+								}
+							],
+							"return": {
+								"type": {
+									"text": "void"
+								}
+							}
+						},
+						{
+							"kind": "method",
+							"name": "select",
+							"description": "Selecciona todo el texto.",
+							"parameters": [],
+							"return": {
+								"type": {
+									"text": "void"
+								}
+							}
+						}
+					],
+					"events": [
+						{
+							"name": "input",
+							"type": {
+								"text": "Event"
+							},
+							"description": "El valor está cambiando (igual que en un input nativo)."
+						},
+						{
+							"name": "change",
+							"type": {
+								"text": "Event"
+							},
+							"description": "El usuario ha confirmado el cambio."
+						},
+						{
+							"name": "gota-cambio",
+							"type": {
+								"text": "CustomEvent<{ valor: string; anterior: string; origen: \"teclado\" | \"puntero\" | \"codigo\" }>"
+							},
+							"description": "Cambio con datos. origen es teclado, puntero o codigo."
+						}
+					],
+					"cssParts": [
+						{
+							"name": "caja",
+							"description": "Marco del campo."
+						},
+						{
+							"name": "entrada",
+							"description": "El input interno."
+						},
+						{
+							"name": "marca",
+							"description": "Icono del tipo de dato."
+						}
+					]
+				},
+				{
+					"kind": "class",
+					"name": "GotaCantidad",
+					"tagName": "gota-cantidad",
+					"customElement": true,
+					"description": "Número con botones de paso, teclado (flechas, Inicio, Fin, Re Pág, Av Pág), límites y formato de moneda. Acepta coma decimal.",
+					"superclass": {
+						"name": "GotaControl",
+						"module": "dist/gota.mjs"
+					},
+					"attributes": [
+						{
+							"name": "name",
+							"fieldName": "name",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"\"",
+							"description": "Nombre con el que se envía en el formulario."
+						},
+						{
+							"name": "value",
+							"fieldName": "value",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"\"",
+							"description": "Valor. El atributo es el valor inicial, al que vuelve con reset(); la propiedad es el valor actual."
+						},
+						{
+							"name": "disabled",
+							"fieldName": "disabled",
+							"type": {
+								"text": "boolean"
+							},
+							"default": "false",
+							"description": "Desactivado: no se puede usar ni se envía."
+						},
+						{
+							"name": "required",
+							"fieldName": "required",
+							"type": {
+								"text": "boolean"
+							},
+							"default": "false",
+							"description": "Obligatorio: vacío marca valueMissing."
+						},
+						{
+							"name": "readonly",
+							"fieldName": "readonly",
+							"type": {
+								"text": "boolean"
+							},
+							"default": "false",
+							"description": "Solo lectura: se envía, pero no se edita ni se valida."
+						},
+						{
+							"name": "persistir",
+							"fieldName": "persistir",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"\"",
+							"description": "Clave de localStorage donde recordar el valor entre visitas. Vacía: no se guarda."
+						},
+						{
+							"name": "min",
+							"fieldName": "min",
+							"type": {
+								"text": "number | null"
+							},
+							"default": "null",
+							"description": "Valor mínimo. Sin él no hay límite."
+						},
+						{
+							"name": "max",
+							"fieldName": "max",
+							"type": {
+								"text": "number | null"
+							},
+							"default": "null",
+							"description": "Valor máximo. Sin él no hay límite."
+						},
+						{
+							"name": "step",
+							"fieldName": "step",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"1\"",
+							"description": "Tamaño del paso. Con «any» no comprueba múltiplos."
+						},
+						{
+							"name": "formato",
+							"fieldName": "formato",
+							"type": {
+								"text": "\"numero\" | \"moneda\""
+							},
+							"default": "\"numero\"",
+							"description": "Cómo se muestra el valor al salir del campo."
+						},
+						{
+							"name": "moneda",
+							"fieldName": "moneda",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"EUR\"",
+							"description": "Código ISO de la moneda."
+						},
+						{
+							"name": "unidad",
+							"fieldName": "unidad",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"\"",
+							"description": "Unidad junto al número, como «uds.»."
+						},
+						{
+							"name": "placeholder",
+							"fieldName": "placeholder",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"\"",
+							"description": "Texto de ayuda con el campo vacío."
+						},
+						{
+							"name": "locale",
+							"fieldName": "locale",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"es-ES\"",
+							"description": "Idioma del formato."
+						}
+					],
+					"members": [
+						{
+							"kind": "field",
+							"name": "name",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"\"",
+							"description": "Nombre con el que se envía en el formulario.",
+							"attribute": "name"
+						},
+						{
+							"kind": "field",
+							"name": "value",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"\"",
+							"description": "Valor. El atributo es el valor inicial, al que vuelve con reset(); la propiedad es el valor actual.",
+							"attribute": "value"
+						},
+						{
+							"kind": "field",
+							"name": "disabled",
+							"type": {
+								"text": "boolean"
+							},
+							"default": "false",
+							"description": "Desactivado: no se puede usar ni se envía.",
+							"attribute": "disabled"
+						},
+						{
+							"kind": "field",
+							"name": "required",
+							"type": {
+								"text": "boolean"
+							},
+							"default": "false",
+							"description": "Obligatorio: vacío marca valueMissing.",
+							"attribute": "required"
+						},
+						{
+							"kind": "field",
+							"name": "readonly",
+							"type": {
+								"text": "boolean"
+							},
+							"default": "false",
+							"description": "Solo lectura: se envía, pero no se edita ni se valida.",
+							"attribute": "readonly"
+						},
+						{
+							"kind": "field",
+							"name": "persistir",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"\"",
+							"description": "Clave de localStorage donde recordar el valor entre visitas. Vacía: no se guarda.",
+							"attribute": "persistir"
+						},
+						{
+							"kind": "field",
+							"name": "min",
+							"type": {
+								"text": "number | null"
+							},
+							"default": "null",
+							"description": "Valor mínimo. Sin él no hay límite.",
+							"attribute": "min"
+						},
+						{
+							"kind": "field",
+							"name": "max",
+							"type": {
+								"text": "number | null"
+							},
+							"default": "null",
+							"description": "Valor máximo. Sin él no hay límite.",
+							"attribute": "max"
+						},
+						{
+							"kind": "field",
+							"name": "step",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"1\"",
+							"description": "Tamaño del paso. Con «any» no comprueba múltiplos.",
+							"attribute": "step"
+						},
+						{
+							"kind": "field",
+							"name": "formato",
+							"type": {
+								"text": "\"numero\" | \"moneda\""
+							},
+							"default": "\"numero\"",
+							"description": "Cómo se muestra el valor al salir del campo.",
+							"attribute": "formato"
+						},
+						{
+							"kind": "field",
+							"name": "moneda",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"EUR\"",
+							"description": "Código ISO de la moneda.",
+							"attribute": "moneda"
+						},
+						{
+							"kind": "field",
+							"name": "unidad",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"\"",
+							"description": "Unidad junto al número, como «uds.».",
+							"attribute": "unidad"
+						},
+						{
+							"kind": "field",
+							"name": "placeholder",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"\"",
+							"description": "Texto de ayuda con el campo vacío.",
+							"attribute": "placeholder"
+						},
+						{
+							"kind": "field",
+							"name": "locale",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"es-ES\"",
+							"description": "Idioma del formato.",
+							"attribute": "locale"
+						},
+						{
+							"kind": "method",
+							"name": "focus",
+							"description": "Pone el foco en el control.",
+							"parameters": [],
+							"return": {
+								"type": {
+									"text": "void"
+								}
+							}
+						},
+						{
+							"kind": "method",
+							"name": "limpiar",
+							"description": "Vacía el valor sin lanzar eventos.",
+							"parameters": [],
+							"return": {
+								"type": {
+									"text": "void"
+								}
+							}
+						},
+						{
+							"kind": "method",
+							"name": "checkValidity",
+							"description": "Devuelve si es válido.",
+							"parameters": [],
+							"return": {
+								"type": {
+									"text": "boolean"
+								}
+							}
+						},
+						{
+							"kind": "method",
+							"name": "reportValidity",
+							"description": "Devuelve si es válido y muestra el mensaje del navegador.",
+							"parameters": [],
+							"return": {
+								"type": {
+									"text": "boolean"
+								}
+							}
+						},
+						{
+							"kind": "method",
+							"name": "setCustomValidity",
+							"description": "Fija un error propio. Con texto vacío lo quita.",
+							"parameters": [
+								{
+									"name": "texto",
+									"type": {
+										"text": "string"
+									},
+									"optional": false
+								}
+							],
+							"return": {
+								"type": {
+									"text": "void"
+								}
+							}
+						},
+						{
+							"kind": "method",
+							"name": "incrementar",
+							"description": "Suma pasos sin salir de los límites.",
+							"parameters": [
+								{
+									"name": "veces",
+									"type": {
+										"text": "number"
+									},
+									"optional": true
+								}
+							],
+							"return": {
+								"type": {
+									"text": "void"
+								}
+							}
+						},
+						{
+							"kind": "method",
+							"name": "decrementar",
+							"description": "Resta pasos sin salir de los límites.",
+							"parameters": [
+								{
+									"name": "veces",
+									"type": {
+										"text": "number"
+									},
+									"optional": true
+								}
+							],
+							"return": {
+								"type": {
+									"text": "void"
+								}
+							}
+						},
+						{
+							"kind": "method",
+							"name": "stepUp",
+							"description": "Igual que incrementar: mismo nombre que el input nativo.",
+							"parameters": [
+								{
+									"name": "veces",
+									"type": {
+										"text": "number"
+									},
+									"optional": true
+								}
+							],
+							"return": {
+								"type": {
+									"text": "void"
+								}
+							}
+						},
+						{
+							"kind": "method",
+							"name": "stepDown",
+							"description": "Igual que decrementar: mismo nombre que el input nativo.",
+							"parameters": [
+								{
+									"name": "veces",
+									"type": {
+										"text": "number"
+									},
+									"optional": true
+								}
+							],
+							"return": {
+								"type": {
+									"text": "void"
+								}
+							}
+						},
+						{
+							"kind": "method",
+							"name": "select",
+							"description": "Selecciona el texto.",
+							"parameters": [],
+							"return": {
+								"type": {
+									"text": "void"
+								}
+							}
+						}
+					],
+					"events": [
+						{
+							"name": "input",
+							"type": {
+								"text": "Event"
+							},
+							"description": "El valor está cambiando (igual que en un input nativo)."
+						},
+						{
+							"name": "change",
+							"type": {
+								"text": "Event"
+							},
+							"description": "El usuario ha confirmado el cambio."
+						},
+						{
+							"name": "gota-cambio",
+							"type": {
+								"text": "CustomEvent<{ valor: string; anterior: string; origen: \"teclado\" | \"puntero\" | \"codigo\" }>"
+							},
+							"description": "Cambio con datos. origen es teclado, puntero o codigo."
+						}
+					],
+					"cssParts": [
+						{
+							"name": "caja",
+							"description": "Marco del campo."
+						},
+						{
+							"name": "entrada",
+							"description": "El input interno."
+						},
+						{
+							"name": "menos",
+							"description": "Botón de restar."
+						},
+						{
+							"name": "mas",
+							"description": "Botón de sumar."
+						},
+						{
+							"name": "unidad",
+							"description": "Símbolo de la moneda o la unidad."
+						}
+					]
+				},
+				{
+					"kind": "class",
+					"name": "GotaSelector",
+					"tagName": "gota-selector",
+					"customElement": true,
+					"description": "Lista desplegable que se filtra escribiendo, sin distinguir acentos ni mayúsculas. Las opciones se dan con <option> o con la propiedad opciones.",
+					"superclass": {
+						"name": "GotaControl",
+						"module": "dist/gota.mjs"
+					},
+					"attributes": [
+						{
+							"name": "name",
+							"fieldName": "name",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"\"",
+							"description": "Nombre con el que se envía en el formulario."
+						},
+						{
+							"name": "value",
+							"fieldName": "value",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"\"",
+							"description": "Valor. El atributo es el valor inicial, al que vuelve con reset(); la propiedad es el valor actual."
+						},
+						{
+							"name": "disabled",
+							"fieldName": "disabled",
+							"type": {
+								"text": "boolean"
+							},
+							"default": "false",
+							"description": "Desactivado: no se puede usar ni se envía."
+						},
+						{
+							"name": "required",
+							"fieldName": "required",
+							"type": {
+								"text": "boolean"
+							},
+							"default": "false",
+							"description": "Obligatorio: vacío marca valueMissing."
+						},
+						{
+							"name": "readonly",
+							"fieldName": "readonly",
+							"type": {
+								"text": "boolean"
+							},
+							"default": "false",
+							"description": "Solo lectura: se envía, pero no se edita ni se valida."
+						},
+						{
+							"name": "persistir",
+							"fieldName": "persistir",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"\"",
+							"description": "Clave de localStorage donde recordar el valor entre visitas. Vacía: no se guarda."
+						},
+						{
+							"name": "placeholder",
+							"fieldName": "placeholder",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"Selecciona…\"",
+							"description": "Texto cuando no hay nada elegido."
+						},
+						{
+							"name": "sin-resultados",
+							"fieldName": "sinResultados",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"No hay coincidencias\"",
+							"description": "Texto cuando el filtro no encuentra nada."
+						}
+					],
+					"members": [
+						{
+							"kind": "field",
+							"name": "name",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"\"",
+							"description": "Nombre con el que se envía en el formulario.",
+							"attribute": "name"
+						},
+						{
+							"kind": "field",
+							"name": "value",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"\"",
+							"description": "Valor. El atributo es el valor inicial, al que vuelve con reset(); la propiedad es el valor actual.",
+							"attribute": "value"
+						},
+						{
+							"kind": "field",
+							"name": "disabled",
+							"type": {
+								"text": "boolean"
+							},
+							"default": "false",
+							"description": "Desactivado: no se puede usar ni se envía.",
+							"attribute": "disabled"
+						},
+						{
+							"kind": "field",
+							"name": "required",
+							"type": {
+								"text": "boolean"
+							},
+							"default": "false",
+							"description": "Obligatorio: vacío marca valueMissing.",
+							"attribute": "required"
+						},
+						{
+							"kind": "field",
+							"name": "readonly",
+							"type": {
+								"text": "boolean"
+							},
+							"default": "false",
+							"description": "Solo lectura: se envía, pero no se edita ni se valida.",
+							"attribute": "readonly"
+						},
+						{
+							"kind": "field",
+							"name": "persistir",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"\"",
+							"description": "Clave de localStorage donde recordar el valor entre visitas. Vacía: no se guarda.",
+							"attribute": "persistir"
+						},
+						{
+							"kind": "field",
+							"name": "placeholder",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"Selecciona…\"",
+							"description": "Texto cuando no hay nada elegido.",
+							"attribute": "placeholder"
+						},
+						{
+							"kind": "field",
+							"name": "sinResultados",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"No hay coincidencias\"",
+							"description": "Texto cuando el filtro no encuentra nada.",
+							"attribute": "sin-resultados"
+						},
+						{
+							"kind": "field",
+							"name": "opciones",
+							"type": {
+								"text": "Array<OpcionGota | string>"
+							},
+							"default": "[]",
+							"description": "Lista de textos u objetos { valor, texto, tono, desactivada }."
+						},
+						{
+							"kind": "method",
+							"name": "focus",
+							"description": "Pone el foco en el control.",
+							"parameters": [],
+							"return": {
+								"type": {
+									"text": "void"
+								}
+							}
+						},
+						{
+							"kind": "method",
+							"name": "limpiar",
+							"description": "Vacía el valor sin lanzar eventos.",
+							"parameters": [],
+							"return": {
+								"type": {
+									"text": "void"
+								}
+							}
+						},
+						{
+							"kind": "method",
+							"name": "checkValidity",
+							"description": "Devuelve si es válido.",
+							"parameters": [],
+							"return": {
+								"type": {
+									"text": "boolean"
+								}
+							}
+						},
+						{
+							"kind": "method",
+							"name": "reportValidity",
+							"description": "Devuelve si es válido y muestra el mensaje del navegador.",
+							"parameters": [],
+							"return": {
+								"type": {
+									"text": "boolean"
+								}
+							}
+						},
+						{
+							"kind": "method",
+							"name": "setCustomValidity",
+							"description": "Fija un error propio. Con texto vacío lo quita.",
+							"parameters": [
+								{
+									"name": "texto",
+									"type": {
+										"text": "string"
+									},
+									"optional": false
+								}
+							],
+							"return": {
+								"type": {
+									"text": "void"
+								}
+							}
+						},
+						{
+							"kind": "method",
+							"name": "abrir",
+							"description": "Abre la lista.",
+							"parameters": [],
+							"return": {
+								"type": {
+									"text": "void"
+								}
+							}
+						},
+						{
+							"kind": "method",
+							"name": "cerrar",
+							"description": "Cierra la lista.",
+							"parameters": [],
+							"return": {
+								"type": {
+									"text": "void"
+								}
+							}
+						},
+						{
+							"kind": "method",
+							"name": "elegir",
+							"description": "Elige una opción como si la hubiera pulsado el usuario y lanza los eventos.",
+							"parameters": [
+								{
+									"name": "valor",
+									"type": {
+										"text": "string"
+									},
+									"optional": false
+								}
+							],
+							"return": {
+								"type": {
+									"text": "void"
+								}
+							}
+						}
+					],
+					"events": [
+						{
+							"name": "input",
+							"type": {
+								"text": "Event"
+							},
+							"description": "El valor está cambiando (igual que en un input nativo)."
+						},
+						{
+							"name": "change",
+							"type": {
+								"text": "Event"
+							},
+							"description": "El usuario ha confirmado el cambio."
+						},
+						{
+							"name": "gota-cambio",
+							"type": {
+								"text": "CustomEvent<{ valor: string; anterior: string; origen: \"teclado\" | \"puntero\" | \"codigo\" }>"
+							},
+							"description": "Cambio con datos. origen es teclado, puntero o codigo."
+						},
+						{
+							"name": "gota-abrir",
+							"type": {
+								"text": "CustomEvent<Record<string, never>>"
+							},
+							"description": "Se ha abierto la lista."
+						},
+						{
+							"name": "gota-cerrar",
+							"type": {
+								"text": "CustomEvent<Record<string, never>>"
+							},
+							"description": "Se ha cerrado la lista."
+						}
+					],
+					"cssParts": [
+						{
+							"name": "caja",
+							"description": "Marco del campo."
+						},
+						{
+							"name": "entrada",
+							"description": "El input interno."
+						},
+						{
+							"name": "flecha",
+							"description": "Botón de abrir."
+						},
+						{
+							"name": "lista",
+							"description": "Panel con las opciones."
+						},
+						{
+							"name": "opcion",
+							"description": "Cada opción."
+						}
+					]
+				},
+				{
+					"kind": "class",
+					"name": "GotaFecha",
+					"tagName": "gota-fecha",
+					"customElement": true,
+					"description": "Fecha con calendario desplegable, que también se puede escribir (15/3/1990). El valor siempre es AAAA-MM-DD, como en un input date.",
+					"superclass": {
+						"name": "GotaControl",
+						"module": "dist/gota.mjs"
+					},
+					"attributes": [
+						{
+							"name": "name",
+							"fieldName": "name",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"\"",
+							"description": "Nombre con el que se envía en el formulario."
+						},
+						{
+							"name": "value",
+							"fieldName": "value",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"\"",
+							"description": "Valor. El atributo es el valor inicial, al que vuelve con reset(); la propiedad es el valor actual."
+						},
+						{
+							"name": "disabled",
+							"fieldName": "disabled",
+							"type": {
+								"text": "boolean"
+							},
+							"default": "false",
+							"description": "Desactivado: no se puede usar ni se envía."
+						},
+						{
+							"name": "required",
+							"fieldName": "required",
+							"type": {
+								"text": "boolean"
+							},
+							"default": "false",
+							"description": "Obligatorio: vacío marca valueMissing."
+						},
+						{
+							"name": "readonly",
+							"fieldName": "readonly",
+							"type": {
+								"text": "boolean"
+							},
+							"default": "false",
+							"description": "Solo lectura: se envía, pero no se edita ni se valida."
+						},
+						{
+							"name": "persistir",
+							"fieldName": "persistir",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"\"",
+							"description": "Clave de localStorage donde recordar el valor entre visitas. Vacía: no se guarda."
+						},
+						{
+							"name": "min",
+							"fieldName": "min",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"\"",
+							"description": "Fecha mínima (AAAA-MM-DD)."
+						},
+						{
+							"name": "max",
+							"fieldName": "max",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"\"",
+							"description": "Fecha máxima (AAAA-MM-DD)."
+						},
+						{
+							"name": "placeholder",
+							"fieldName": "placeholder",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"dd/mm/aaaa\"",
+							"description": "Texto de ayuda con el campo vacío."
+						},
+						{
+							"name": "locale",
+							"fieldName": "locale",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"es-ES\"",
+							"description": "Idioma del calendario."
+						}
+					],
+					"members": [
+						{
+							"kind": "field",
+							"name": "name",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"\"",
+							"description": "Nombre con el que se envía en el formulario.",
+							"attribute": "name"
+						},
+						{
+							"kind": "field",
+							"name": "value",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"\"",
+							"description": "Valor. El atributo es el valor inicial, al que vuelve con reset(); la propiedad es el valor actual.",
+							"attribute": "value"
+						},
+						{
+							"kind": "field",
+							"name": "disabled",
+							"type": {
+								"text": "boolean"
+							},
+							"default": "false",
+							"description": "Desactivado: no se puede usar ni se envía.",
+							"attribute": "disabled"
+						},
+						{
+							"kind": "field",
+							"name": "required",
+							"type": {
+								"text": "boolean"
+							},
+							"default": "false",
+							"description": "Obligatorio: vacío marca valueMissing.",
+							"attribute": "required"
+						},
+						{
+							"kind": "field",
+							"name": "readonly",
+							"type": {
+								"text": "boolean"
+							},
+							"default": "false",
+							"description": "Solo lectura: se envía, pero no se edita ni se valida.",
+							"attribute": "readonly"
+						},
+						{
+							"kind": "field",
+							"name": "persistir",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"\"",
+							"description": "Clave de localStorage donde recordar el valor entre visitas. Vacía: no se guarda.",
+							"attribute": "persistir"
+						},
+						{
+							"kind": "field",
+							"name": "min",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"\"",
+							"description": "Fecha mínima (AAAA-MM-DD).",
+							"attribute": "min"
+						},
+						{
+							"kind": "field",
+							"name": "max",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"\"",
+							"description": "Fecha máxima (AAAA-MM-DD).",
+							"attribute": "max"
+						},
+						{
+							"kind": "field",
+							"name": "placeholder",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"dd/mm/aaaa\"",
+							"description": "Texto de ayuda con el campo vacío.",
+							"attribute": "placeholder"
+						},
+						{
+							"kind": "field",
+							"name": "locale",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"es-ES\"",
+							"description": "Idioma del calendario.",
+							"attribute": "locale"
+						},
+						{
+							"kind": "method",
+							"name": "focus",
+							"description": "Pone el foco en el control.",
+							"parameters": [],
+							"return": {
+								"type": {
+									"text": "void"
+								}
+							}
+						},
+						{
+							"kind": "method",
+							"name": "limpiar",
+							"description": "Vacía el valor sin lanzar eventos.",
+							"parameters": [],
+							"return": {
+								"type": {
+									"text": "void"
+								}
+							}
+						},
+						{
+							"kind": "method",
+							"name": "checkValidity",
+							"description": "Devuelve si es válido.",
+							"parameters": [],
+							"return": {
+								"type": {
+									"text": "boolean"
+								}
+							}
+						},
+						{
+							"kind": "method",
+							"name": "reportValidity",
+							"description": "Devuelve si es válido y muestra el mensaje del navegador.",
+							"parameters": [],
+							"return": {
+								"type": {
+									"text": "boolean"
+								}
+							}
+						},
+						{
+							"kind": "method",
+							"name": "setCustomValidity",
+							"description": "Fija un error propio. Con texto vacío lo quita.",
+							"parameters": [
+								{
+									"name": "texto",
+									"type": {
+										"text": "string"
+									},
+									"optional": false
+								}
+							],
+							"return": {
+								"type": {
+									"text": "void"
+								}
+							}
+						},
+						{
+							"kind": "method",
+							"name": "abrir",
+							"description": "Abre el calendario.",
+							"parameters": [],
+							"return": {
+								"type": {
+									"text": "void"
+								}
+							}
+						},
+						{
+							"kind": "method",
+							"name": "cerrar",
+							"description": "Cierra el calendario.",
+							"parameters": [],
+							"return": {
+								"type": {
+									"text": "void"
+								}
+							}
+						},
+						{
+							"kind": "method",
+							"name": "irAMes",
+							"description": "Enseña ese mes (de 1 a 12) sin cambiar el valor.",
+							"parameters": [
+								{
+									"name": "anio",
+									"type": {
+										"text": "number"
+									},
+									"optional": false
+								},
+								{
+									"name": "mes",
+									"type": {
+										"text": "number"
+									},
+									"optional": false
+								}
+							],
+							"return": {
+								"type": {
+									"text": "void"
+								}
+							}
+						},
+						{
+							"kind": "method",
+							"name": "hoy",
+							"description": "Elige la fecha de hoy y lanza los eventos.",
+							"parameters": [],
+							"return": {
+								"type": {
+									"text": "void"
+								}
+							}
+						}
+					],
+					"events": [
+						{
+							"name": "input",
+							"type": {
+								"text": "Event"
+							},
+							"description": "El valor está cambiando (igual que en un input nativo)."
+						},
+						{
+							"name": "change",
+							"type": {
+								"text": "Event"
+							},
+							"description": "El usuario ha confirmado el cambio."
+						},
+						{
+							"name": "gota-cambio",
+							"type": {
+								"text": "CustomEvent<{ valor: string; anterior: string; origen: \"teclado\" | \"puntero\" | \"codigo\" }>"
+							},
+							"description": "Cambio con datos. origen es teclado, puntero o codigo."
+						},
+						{
+							"name": "gota-abrir",
+							"type": {
+								"text": "CustomEvent<Record<string, never>>"
+							},
+							"description": "Se ha abierto el calendario."
+						},
+						{
+							"name": "gota-cerrar",
+							"type": {
+								"text": "CustomEvent<Record<string, never>>"
+							},
+							"description": "Se ha cerrado el calendario."
+						},
+						{
+							"name": "gota-mes",
+							"type": {
+								"text": "CustomEvent<{ anio: number; mes: number }>"
+							},
+							"description": "El calendario enseña otro mes. mes va de 1 a 12."
+						}
+					],
+					"cssParts": [
+						{
+							"name": "caja",
+							"description": "Marco del campo."
+						},
+						{
+							"name": "entrada",
+							"description": "El input interno."
+						},
+						{
+							"name": "abrir",
+							"description": "Botón del calendario."
+						},
+						{
+							"name": "calendario",
+							"description": "Panel del calendario."
+						},
+						{
+							"name": "dia",
+							"description": "Cada día."
+						}
+					]
+				},
+				{
+					"kind": "class",
+					"name": "GotaInterruptor",
+					"tagName": "gota-interruptor",
+					"customElement": true,
+					"description": "Interruptor para valores de sí o no. La gota cruza el canal y se estira al hacerlo. Se usa igual que una casilla: propiedad checked y evento change.",
+					"superclass": {
+						"name": "GotaControl",
+						"module": "dist/gota.mjs"
+					},
+					"attributes": [
+						{
+							"name": "name",
+							"fieldName": "name",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"\"",
+							"description": "Nombre con el que se envía en el formulario."
+						},
+						{
+							"name": "value",
+							"fieldName": "value",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"on\"",
+							"description": "Valor que se envía cuando está activado."
+						},
+						{
+							"name": "disabled",
+							"fieldName": "disabled",
+							"type": {
+								"text": "boolean"
+							},
+							"default": "false",
+							"description": "Desactivado: no se puede usar ni se envía."
+						},
+						{
+							"name": "required",
+							"fieldName": "required",
+							"type": {
+								"text": "boolean"
+							},
+							"default": "false",
+							"description": "Obligatorio: vacío marca valueMissing."
+						},
+						{
+							"name": "readonly",
+							"fieldName": "readonly",
+							"type": {
+								"text": "boolean"
+							},
+							"default": "false",
+							"description": "Solo lectura: se envía, pero no se edita ni se valida."
+						},
+						{
+							"name": "persistir",
+							"fieldName": "persistir",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"\"",
+							"description": "Clave de localStorage donde recordar el valor entre visitas. Vacía: no se guarda."
+						},
+						{
+							"name": "checked",
+							"fieldName": "checked",
+							"type": {
+								"text": "boolean"
+							},
+							"default": "false",
+							"description": "Activado. El atributo es el estado inicial, al que vuelve con reset(); la propiedad es el estado actual."
+						}
+					],
+					"members": [
+						{
+							"kind": "field",
+							"name": "name",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"\"",
+							"description": "Nombre con el que se envía en el formulario.",
+							"attribute": "name"
+						},
+						{
+							"kind": "field",
+							"name": "value",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"on\"",
+							"description": "Valor que se envía cuando está activado.",
+							"attribute": "value"
+						},
+						{
+							"kind": "field",
+							"name": "disabled",
+							"type": {
+								"text": "boolean"
+							},
+							"default": "false",
+							"description": "Desactivado: no se puede usar ni se envía.",
+							"attribute": "disabled"
+						},
+						{
+							"kind": "field",
+							"name": "required",
+							"type": {
+								"text": "boolean"
+							},
+							"default": "false",
+							"description": "Obligatorio: vacío marca valueMissing.",
+							"attribute": "required"
+						},
+						{
+							"kind": "field",
+							"name": "readonly",
+							"type": {
+								"text": "boolean"
+							},
+							"default": "false",
+							"description": "Solo lectura: se envía, pero no se edita ni se valida.",
+							"attribute": "readonly"
+						},
+						{
+							"kind": "field",
+							"name": "persistir",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"\"",
+							"description": "Clave de localStorage donde recordar el valor entre visitas. Vacía: no se guarda.",
+							"attribute": "persistir"
+						},
+						{
+							"kind": "field",
+							"name": "checked",
+							"type": {
+								"text": "boolean"
+							},
+							"default": "false",
+							"description": "Activado. El atributo es el estado inicial, al que vuelve con reset(); la propiedad es el estado actual.",
+							"attribute": "checked"
+						},
+						{
+							"kind": "method",
+							"name": "focus",
+							"description": "Pone el foco en el control.",
+							"parameters": [],
+							"return": {
+								"type": {
+									"text": "void"
+								}
+							}
+						},
+						{
+							"kind": "method",
+							"name": "limpiar",
+							"description": "Vacía el valor sin lanzar eventos.",
+							"parameters": [],
+							"return": {
+								"type": {
+									"text": "void"
+								}
+							}
+						},
+						{
+							"kind": "method",
+							"name": "checkValidity",
+							"description": "Devuelve si es válido.",
+							"parameters": [],
+							"return": {
+								"type": {
+									"text": "boolean"
+								}
+							}
+						},
+						{
+							"kind": "method",
+							"name": "reportValidity",
+							"description": "Devuelve si es válido y muestra el mensaje del navegador.",
+							"parameters": [],
+							"return": {
+								"type": {
+									"text": "boolean"
+								}
+							}
+						},
+						{
+							"kind": "method",
+							"name": "setCustomValidity",
+							"description": "Fija un error propio. Con texto vacío lo quita.",
+							"parameters": [
+								{
+									"name": "texto",
+									"type": {
+										"text": "string"
+									},
+									"optional": false
+								}
+							],
+							"return": {
+								"type": {
+									"text": "void"
+								}
+							}
+						},
+						{
+							"kind": "method",
+							"name": "alternar",
+							"description": "Cambia de estado sin lanzar eventos.",
+							"parameters": [],
+							"return": {
+								"type": {
+									"text": "void"
+								}
+							}
+						}
+					],
+					"events": [
+						{
+							"name": "input",
+							"type": {
+								"text": "Event"
+							},
+							"description": "El valor está cambiando (igual que en un input nativo)."
+						},
+						{
+							"name": "change",
+							"type": {
+								"text": "Event"
+							},
+							"description": "El usuario ha confirmado el cambio."
+						},
+						{
+							"name": "gota-cambio",
+							"type": {
+								"text": "CustomEvent<{ valor: boolean; anterior: boolean; origen: \"teclado\" | \"puntero\" | \"codigo\" }>"
+							},
+							"description": "Cambio con datos. valor es true o false; origen es teclado, puntero o codigo."
+						}
+					],
+					"cssParts": [
+						{
+							"name": "canal",
+							"description": "El canal por el que corre la gota."
+						}
+					]
+				},
+				{
+					"kind": "class",
+					"name": "GotaClave",
+					"tagName": "gota-clave",
+					"customElement": true,
+					"description": "Envuelve un <input type=\"password\"> real, que se queda en el HTML de la página para que los gestores de contraseñas lo encuentren. Añade mostrar y ocultar y, si se pide, un medidor de fuerza.",
+					"superclass": {
+						"name": "GotaElemento",
+						"module": "dist/gota.mjs"
+					},
+					"attributes": [
+						{
+							"name": "medidor",
+							"fieldName": "medidor",
+							"type": {
+								"text": "boolean"
+							},
+							"default": "false",
+							"description": "Muestra el medidor de fuerza."
+						},
+						{
+							"name": "minimo",
+							"fieldName": "minimo",
+							"type": {
+								"text": "number"
+							},
+							"default": "8",
+							"description": "Longitud mínima que pide el medidor."
+						},
+						{
+							"name": "visible",
+							"fieldName": "visible",
+							"type": {
+								"text": "boolean"
+							},
+							"default": "false",
+							"description": "La contraseña se ve en claro."
+						}
+					],
+					"members": [
+						{
+							"kind": "field",
+							"name": "medidor",
+							"type": {
+								"text": "boolean"
+							},
+							"default": "false",
+							"description": "Muestra el medidor de fuerza.",
+							"attribute": "medidor"
+						},
+						{
+							"kind": "field",
+							"name": "minimo",
+							"type": {
+								"text": "number"
+							},
+							"default": "8",
+							"description": "Longitud mínima que pide el medidor.",
+							"attribute": "minimo"
+						},
+						{
+							"kind": "field",
+							"name": "visible",
+							"type": {
+								"text": "boolean"
+							},
+							"default": "false",
+							"description": "La contraseña se ve en claro.",
+							"attribute": "visible"
+						},
+						{
+							"kind": "method",
+							"name": "mostrar",
+							"description": "Enseña la contraseña en claro.",
+							"parameters": [],
+							"return": {
+								"type": {
+									"text": "void"
+								}
+							}
+						},
+						{
+							"kind": "method",
+							"name": "ocultar",
+							"description": "Vuelve a ocultarla.",
+							"parameters": [],
+							"return": {
+								"type": {
+									"text": "void"
+								}
+							}
+						},
+						{
+							"kind": "method",
+							"name": "alternar",
+							"description": "Cambia entre las dos.",
+							"parameters": [],
+							"return": {
+								"type": {
+									"text": "void"
+								}
+							}
+						}
+					],
+					"events": [
+						{
+							"name": "gota-visibilidad",
+							"type": {
+								"text": "CustomEvent<{ visible: boolean }>"
+							},
+							"description": "Se ha mostrado u ocultado la contraseña."
+						},
+						{
+							"name": "gota-fuerza",
+							"type": {
+								"text": "CustomEvent<{ puntos: number; texto: string }>"
+							},
+							"description": "Ha cambiado la fuerza de la contraseña (de 0 a 5)."
+						}
+					],
+					"cssParts": [
+						{
+							"name": "caja",
+							"description": "Marco del campo."
+						},
+						{
+							"name": "ver",
+							"description": "Botón de mostrar y ocultar."
+						},
+						{
+							"name": "medidor",
+							"description": "Tubo de fuerza."
+						},
+						{
+							"name": "texto",
+							"description": "Texto de fuerza."
+						}
+					]
+				},
+				{
+					"kind": "class",
+					"name": "GotaFiltros",
+					"tagName": "gota-filtros",
+					"customElement": true,
+					"description": "Barra de filtros con una sola gota: al elegir otro, la gota viaja hasta él. Cada filtro puede llevar un punto de color y una cantidad.",
+					"superclass": {
+						"name": "GotaElemento",
+						"module": "dist/gota.mjs"
+					},
+					"attributes": [
+						{
+							"name": "value",
+							"fieldName": "value",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"\"",
+							"description": "Valor del filtro elegido."
+						},
+						{
+							"name": "etiqueta",
+							"fieldName": "etiqueta",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"Filtros\"",
+							"description": "Nombre del grupo para los lectores de pantalla."
+						}
+					],
+					"members": [
+						{
+							"kind": "field",
+							"name": "value",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"\"",
+							"description": "Valor del filtro elegido.",
+							"attribute": "value"
+						},
+						{
+							"kind": "field",
+							"name": "etiqueta",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"Filtros\"",
+							"description": "Nombre del grupo para los lectores de pantalla.",
+							"attribute": "etiqueta"
+						},
+						{
+							"kind": "field",
+							"name": "opciones",
+							"type": {
+								"text": "Array<OpcionGota | string>"
+							},
+							"default": "[]",
+							"description": "Lista de { valor, texto, cantidad, tono }."
+						},
+						{
+							"kind": "method",
+							"name": "actualizarCantidades",
+							"description": "Cambia los números sin repintar. Recibe { valor: cantidad }.",
+							"parameters": [
+								{
+									"name": "cantidades",
+									"type": {
+										"text": "Record<string, number>"
+									},
+									"optional": false
+								}
+							],
+							"return": {
+								"type": {
+									"text": "void"
+								}
+							}
+						}
+					],
+					"events": [
+						{
+							"name": "change",
+							"type": {
+								"text": "Event"
+							},
+							"description": "El usuario ha elegido otro filtro."
+						},
+						{
+							"name": "gota-cambio",
+							"type": {
+								"text": "CustomEvent<{ valor: string; anterior: string; origen: \"teclado\" | \"puntero\" }>"
+							},
+							"description": "Cambio con datos. origen es teclado o puntero."
+						}
+					],
+					"cssParts": [
+						{
+							"name": "barra",
+							"description": "Contenedor."
+						},
+						{
+							"name": "filtro",
+							"description": "Cada botón."
+						},
+						{
+							"name": "cantidad",
+							"description": "Número de cada filtro."
+						}
+					]
+				},
+				{
+					"kind": "class",
+					"name": "GotaPaginador",
+					"tagName": "gota-paginador",
+					"customElement": true,
+					"description": "Paginación numerada que resume los saltos largos con puntos suspensivos. La gota marca la página actual.",
+					"superclass": {
+						"name": "GotaElemento",
+						"module": "dist/gota.mjs"
+					},
+					"attributes": [
+						{
+							"name": "pagina",
+							"fieldName": "pagina",
+							"type": {
+								"text": "number"
+							},
+							"default": "1",
+							"description": "Página actual, desde 1."
+						},
+						{
+							"name": "paginas",
+							"fieldName": "paginas",
+							"type": {
+								"text": "number"
+							},
+							"default": "1",
+							"description": "Total de páginas."
+						},
+						{
+							"name": "vecinas",
+							"fieldName": "vecinas",
+							"type": {
+								"text": "number"
+							},
+							"default": "1",
+							"description": "Páginas que se ven a cada lado de la actual."
+						},
+						{
+							"name": "etiqueta",
+							"fieldName": "etiqueta",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"Paginación\"",
+							"description": "Nombre para los lectores de pantalla."
+						}
+					],
+					"members": [
+						{
+							"kind": "field",
+							"name": "pagina",
+							"type": {
+								"text": "number"
+							},
+							"default": "1",
+							"description": "Página actual, desde 1.",
+							"attribute": "pagina"
+						},
+						{
+							"kind": "field",
+							"name": "paginas",
+							"type": {
+								"text": "number"
+							},
+							"default": "1",
+							"description": "Total de páginas.",
+							"attribute": "paginas"
+						},
+						{
+							"kind": "field",
+							"name": "vecinas",
+							"type": {
+								"text": "number"
+							},
+							"default": "1",
+							"description": "Páginas que se ven a cada lado de la actual.",
+							"attribute": "vecinas"
+						},
+						{
+							"kind": "field",
+							"name": "etiqueta",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"Paginación\"",
+							"description": "Nombre para los lectores de pantalla.",
+							"attribute": "etiqueta"
+						},
+						{
+							"kind": "method",
+							"name": "siguiente",
+							"description": "Avanza una página y lanza el evento.",
+							"parameters": [],
+							"return": {
+								"type": {
+									"text": "void"
+								}
+							}
+						},
+						{
+							"kind": "method",
+							"name": "anterior",
+							"description": "Retrocede una página y lanza el evento.",
+							"parameters": [],
+							"return": {
+								"type": {
+									"text": "void"
+								}
+							}
+						},
+						{
+							"kind": "method",
+							"name": "ir",
+							"description": "Va a esa página, sin salir del rango, y lanza el evento.",
+							"parameters": [
+								{
+									"name": "pagina",
+									"type": {
+										"text": "number"
+									},
+									"optional": false
+								}
+							],
+							"return": {
+								"type": {
+									"text": "void"
+								}
+							}
+						}
+					],
+					"events": [
+						{
+							"name": "gota-pagina",
+							"type": {
+								"text": "CustomEvent<{ pagina: number; anterior: number }>"
+							},
+							"description": "El usuario ha cambiado de página."
+						}
+					],
+					"cssParts": [
+						{
+							"name": "barra",
+							"description": "Contenedor."
+						},
+						{
+							"name": "pagina",
+							"description": "Botón de cada página."
+						},
+						{
+							"name": "flecha",
+							"description": "Botones de anterior y siguiente."
+						}
+					]
+				},
+				{
+					"kind": "class",
+					"name": "GotaNivel",
+					"tagName": "gota-nivel",
+					"customElement": true,
+					"description": "Enseña una cantidad como el líquido de un tubo, con una marca de mínimo y un estado que cambia de color: agotado, bajo, normal o lleno.",
+					"superclass": {
+						"name": "GotaElemento",
+						"module": "dist/gota.mjs"
+					},
+					"attributes": [
+						{
+							"name": "value",
+							"fieldName": "value",
+							"type": {
+								"text": "number"
+							},
+							"default": "0",
+							"description": "Cantidad actual."
+						},
+						{
+							"name": "max",
+							"fieldName": "max",
+							"type": {
+								"text": "number"
+							},
+							"default": "100",
+							"description": "Cantidad con la que el tubo está lleno."
+						},
+						{
+							"name": "minimo",
+							"fieldName": "minimo",
+							"type": {
+								"text": "number"
+							},
+							"default": "0",
+							"description": "Por debajo de esta cantidad el estado es «bajo». Con 0 no hay marca."
+						},
+						{
+							"name": "unidad",
+							"fieldName": "unidad",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"\"",
+							"description": "Unidad junto a la cifra."
+						},
+						{
+							"name": "vertical",
+							"fieldName": "vertical",
+							"type": {
+								"text": "boolean"
+							},
+							"default": "false",
+							"description": "Tubo de pie, como una probeta."
+						},
+						{
+							"name": "sin-cifra",
+							"fieldName": "sinCifra",
+							"type": {
+								"text": "boolean"
+							},
+							"default": "false",
+							"description": "Oculta el número."
+						},
+						{
+							"name": "etiqueta",
+							"fieldName": "etiqueta",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"Nivel\"",
+							"description": "Nombre para los lectores de pantalla."
+						}
+					],
+					"members": [
+						{
+							"kind": "field",
+							"name": "value",
+							"type": {
+								"text": "number"
+							},
+							"default": "0",
+							"description": "Cantidad actual.",
+							"attribute": "value"
+						},
+						{
+							"kind": "field",
+							"name": "max",
+							"type": {
+								"text": "number"
+							},
+							"default": "100",
+							"description": "Cantidad con la que el tubo está lleno.",
+							"attribute": "max"
+						},
+						{
+							"kind": "field",
+							"name": "minimo",
+							"type": {
+								"text": "number"
+							},
+							"default": "0",
+							"description": "Por debajo de esta cantidad el estado es «bajo». Con 0 no hay marca.",
+							"attribute": "minimo"
+						},
+						{
+							"kind": "field",
+							"name": "unidad",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"\"",
+							"description": "Unidad junto a la cifra.",
+							"attribute": "unidad"
+						},
+						{
+							"kind": "field",
+							"name": "vertical",
+							"type": {
+								"text": "boolean"
+							},
+							"default": "false",
+							"description": "Tubo de pie, como una probeta.",
+							"attribute": "vertical"
+						},
+						{
+							"kind": "field",
+							"name": "sinCifra",
+							"type": {
+								"text": "boolean"
+							},
+							"default": "false",
+							"description": "Oculta el número.",
+							"attribute": "sin-cifra"
+						},
+						{
+							"kind": "field",
+							"name": "etiqueta",
+							"type": {
+								"text": "string"
+							},
+							"default": "\"Nivel\"",
+							"description": "Nombre para los lectores de pantalla.",
+							"attribute": "etiqueta"
+						},
+						{
+							"kind": "method",
+							"name": "ajustar",
+							"description": "Suma o resta a la cantidad actual, sin bajar de 0.",
+							"parameters": [
+								{
+									"name": "diferencia",
+									"type": {
+										"text": "number"
+									},
+									"optional": false
+								}
+							],
+							"return": {
+								"type": {
+									"text": "void"
+								}
+							}
+						}
+					],
+					"events": [
+						{
+							"name": "gota-umbral",
+							"type": {
+								"text": "CustomEvent<{ estado: EstadoNivel; anterior: EstadoNivel; valor: number }>"
+							},
+							"description": "El nivel ha pasado a otro estado."
+						}
+					],
+					"cssParts": [
+						{
+							"name": "tubo",
+							"description": "El tubo."
+						},
+						{
+							"name": "liquido",
+							"description": "El líquido."
+						},
+						{
+							"name": "marca",
+							"description": "La marca del mínimo."
+						},
+						{
+							"name": "cifra",
+							"description": "El número."
+						}
+					]
+				}
+			],
+			"exports": [
+				{
+					"kind": "js",
+					"name": "GotaCampo",
+					"declaration": {
+						"name": "GotaCampo",
+						"module": "dist/gota.mjs"
+					}
+				},
+				{
+					"kind": "custom-element-definition",
+					"name": "gota-campo",
+					"declaration": {
+						"name": "GotaCampo",
+						"module": "dist/gota.mjs"
+					}
+				},
+				{
+					"kind": "js",
+					"name": "GotaCantidad",
+					"declaration": {
+						"name": "GotaCantidad",
+						"module": "dist/gota.mjs"
+					}
+				},
+				{
+					"kind": "custom-element-definition",
+					"name": "gota-cantidad",
+					"declaration": {
+						"name": "GotaCantidad",
+						"module": "dist/gota.mjs"
+					}
+				},
+				{
+					"kind": "js",
+					"name": "GotaSelector",
+					"declaration": {
+						"name": "GotaSelector",
+						"module": "dist/gota.mjs"
+					}
+				},
+				{
+					"kind": "custom-element-definition",
+					"name": "gota-selector",
+					"declaration": {
+						"name": "GotaSelector",
+						"module": "dist/gota.mjs"
+					}
+				},
+				{
+					"kind": "js",
+					"name": "GotaFecha",
+					"declaration": {
+						"name": "GotaFecha",
+						"module": "dist/gota.mjs"
+					}
+				},
+				{
+					"kind": "custom-element-definition",
+					"name": "gota-fecha",
+					"declaration": {
+						"name": "GotaFecha",
+						"module": "dist/gota.mjs"
+					}
+				},
+				{
+					"kind": "js",
+					"name": "GotaInterruptor",
+					"declaration": {
+						"name": "GotaInterruptor",
+						"module": "dist/gota.mjs"
+					}
+				},
+				{
+					"kind": "custom-element-definition",
+					"name": "gota-interruptor",
+					"declaration": {
+						"name": "GotaInterruptor",
+						"module": "dist/gota.mjs"
+					}
+				},
+				{
+					"kind": "js",
+					"name": "GotaClave",
+					"declaration": {
+						"name": "GotaClave",
+						"module": "dist/gota.mjs"
+					}
+				},
+				{
+					"kind": "custom-element-definition",
+					"name": "gota-clave",
+					"declaration": {
+						"name": "GotaClave",
+						"module": "dist/gota.mjs"
+					}
+				},
+				{
+					"kind": "js",
+					"name": "GotaFiltros",
+					"declaration": {
+						"name": "GotaFiltros",
+						"module": "dist/gota.mjs"
+					}
+				},
+				{
+					"kind": "custom-element-definition",
+					"name": "gota-filtros",
+					"declaration": {
+						"name": "GotaFiltros",
+						"module": "dist/gota.mjs"
+					}
+				},
+				{
+					"kind": "js",
+					"name": "GotaPaginador",
+					"declaration": {
+						"name": "GotaPaginador",
+						"module": "dist/gota.mjs"
+					}
+				},
+				{
+					"kind": "custom-element-definition",
+					"name": "gota-paginador",
+					"declaration": {
+						"name": "GotaPaginador",
+						"module": "dist/gota.mjs"
+					}
+				},
+				{
+					"kind": "js",
+					"name": "GotaNivel",
+					"declaration": {
+						"name": "GotaNivel",
+						"module": "dist/gota.mjs"
+					}
+				},
+				{
+					"kind": "custom-element-definition",
+					"name": "gota-nivel",
+					"declaration": {
+						"name": "GotaNivel",
+						"module": "dist/gota.mjs"
+					}
+				}
+			]
+		}
+	]
+}

@@ -507,26 +507,23 @@
 		crearPaginacion(estado, total, desde, cantidad, paginas, entidad, contenedor) {
 			const barra = document.createElement("div");
 			const texto = document.createElement("span");
-			const botones = document.createElement("div");
+			const paginador = document.createElement("gota-paginador");
 
 			barra.className = "paginacion";
 			texto.textContent = total ? `Mostrando ${desde + 1}–${desde + cantidad} de ${total}` : "";
-			botones.className = "fila-botones";
 
-			[["‹ Anterior", -1], ["Siguiente ›", 1]].forEach(([etiqueta, paso]) => {
-				const boton = document.createElement("button");
-				boton.type = "button";
-				boton.className = "boton pequeno";
-				boton.textContent = etiqueta;
-				boton.disabled = (paso < 0 && estado.pagina === 1) || (paso > 0 && estado.pagina === paginas);
-				boton.addEventListener("click", () => {
-					estado.pagina += paso;
-					this.pintar(entidad, contenedor);
-				});
-				botones.appendChild(boton);
+			// Componente gota-paginador: numera las páginas y la gota marca la actual
+			paginador.paginas = paginas;
+			paginador.pagina = estado.pagina;
+			paginador.etiqueta = `Páginas de ${entidad.titulo.toLowerCase()}`;
+			paginador.hidden = paginas < 2;
+			paginador.addEventListener("gota-pagina", (evento) => {
+				estado.pagina = evento.detail.pagina;
+				this.pintar(entidad, contenedor);
+				DOM.uno(".paginacion gota-paginador", contenedor)?.focus();
 			});
 
-			barra.append(texto, botones);
+			barra.append(texto, paginador);
 			return barra;
 		}
 
@@ -639,7 +636,7 @@
 
 				const invalidos = DOM.todos(".campo", formulario).filter((campo) => !this.validarCampo(campo));
 				if (invalidos.length) {
-					DOM.uno("input,select,textarea", invalidos[0]).focus();
+					DOM.uno("[name]", invalidos[0]).focus();
 					this.app.toast.aviso("Revisa el formulario", `Hay ${invalidos.length} ${invalidos.length === 1 ? "campo" : "campos"} por corregir.`);
 					return;
 				}
@@ -651,6 +648,12 @@
 
 			return formulario;
 		}
+
+		/** Componente de gota para cada tipo de campo del esquema (el textarea se queda nativo) */
+		static COMPONENTES = {
+			text: "gota-campo", email: "gota-campo", tel: "gota-campo", url: "gota-campo",
+			number: "gota-cantidad", select: "gota-selector", date: "gota-fecha", checkbox: "gota-interruptor"
+		};
 
 		crearCampo(campo, registro) {
 			const etiqueta = document.createElement("label");
@@ -668,41 +671,52 @@
 				texto.appendChild(marca);
 			}
 
-			if (campo.tipo === "select") {
-				control = document.createElement("select");
-				const opciones = this.opcionesDe(campo);
-				const actual = registro?.[campo.nombre];
-
-				control.add(new Option("Selecciona…", ""));
-				opciones.forEach((opcion) => control.add(new Option(opcion)));
-				// Si el valor guardado ya no existe (p. ej. un cliente borrado), se conserva igualmente
-				if (actual && !opciones.includes(actual)) { control.add(new Option(`${actual} (no disponible)`, actual)); }
-			} else if (campo.tipo === "textarea") {
+			// Cada tipo del esquema se pinta con un componente de la librería gota (RA3).
+			// Se comportan como controles nativos: name, value, required, validity y eventos input/change.
+			if (campo.tipo === "textarea") {
 				control = document.createElement("textarea");
 				etiqueta.classList.add("form-completo");
 			} else {
-				control = document.createElement("input");
-				control.type = campo.tipo;
-				if (campo.paso !== undefined) { control.step = campo.paso; }
-				if (campo.min !== undefined) { control.min = campo.min; }
+				control = document.createElement(FormularioIU.COMPONENTES[campo.tipo] || "gota-campo");
+			}
+
+			if (control.localName === "gota-campo") {
+				control.type = ["email", "tel", "url"].includes(campo.tipo) ? campo.tipo : "text";
 				if (campo.patron) { control.pattern = campo.patron; }
 				if (campo.tipo === "url") { control.placeholder = "https://"; }
 				if (campo.tipo === "email") { control.autocomplete = "email"; }
 			}
+			if (campo.tipo === "number") {
+				control.step = String(campo.paso ?? 1);
+				if (campo.min !== undefined) { control.min = campo.min; }
+				if (campo.formato === "moneda") { control.formato = "moneda"; }
+			}
+			if (campo.tipo === "select") {
+				const opciones = this.opcionesDe(campo);
+				const actual = registro?.[campo.nombre];
+				control.opciones = opciones.map((o) => ({ valor: o, texto: o, tono: campo.colores?.[o] }));
+				// Si el valor guardado ya no existe (p. ej. un cliente borrado), se conserva igualmente
+				if (actual && !opciones.includes(actual)) {
+					control.opciones = [...control.opciones, { valor: actual, texto: `${actual} (no disponible)` }];
+				}
+			}
 
 			control.name = campo.nombre;
 			control.required = Boolean(campo.requerido);
-			control.readOnly = campo.nombre === "id" || Boolean(campo.soloLectura);
+			control.toggleAttribute("readonly", campo.nombre === "id" || Boolean(campo.soloLectura));
 			if (campo.soloLectura && campo.calculo) { control.title = "Se calcula automáticamente"; }
 
 			const hoy = new Date().toISOString().slice(0, 10);
 			const valor = registro ? registro[campo.nombre] : (campo.defecto === "hoy" ? hoy : campo.defecto);
 
-			if (valor !== undefined) {
+			// El atributo es el valor inicial (al que vuelve reset()); la propiedad, el actual
+			if (valor !== undefined && valor !== null) {
 				if (campo.tipo === "checkbox") {
+					control.toggleAttribute("checked", Boolean(valor));
 					control.checked = Boolean(valor);
 				} else {
-					control.value = valor ?? "";
+					control.setAttribute("value", valor);
+					control.value = String(valor);
 				}
 			}
 
@@ -721,7 +735,7 @@
 		}
 
 		validarCampo(campo) {
-			const control = DOM.uno("input,select,textarea", campo);
+			const control = DOM.uno("[name]", campo);
 			const error = DOM.uno(".error", campo);
 
 			if (!error) { return true; }
@@ -1066,6 +1080,16 @@
 			if (campo.colores && valor) {
 				return DecoracionIU.pastilla(valor, campo.colores[valor]);
 			}
+			// "nivel" en el esquema: la cantidad se enseña con el componente gota-nivel
+			if (campo.nivel && valor !== undefined && valor !== null && valor !== "") {
+				const nivel = document.createElement("gota-nivel");
+				nivel.max = campo.nivel.max;
+				nivel.minimo = campo.nivel.minimo ?? 0;
+				if (campo.nivel.unidad) { nivel.unidad = campo.nivel.unidad; }
+				nivel.etiqueta = campo.etiqueta;
+				nivel.value = Number(valor);
+				return nivel;
+			}
 			if (entidad.esquema.avatar?.[0] === campo.nombre) {
 				const envoltorio = document.createElement("span");
 				const nombre = entidad.textoRegistro(registro);
@@ -1309,6 +1333,30 @@
 			capa.classList.remove("abierta");
 			setTimeout(() => capa.remove(), 320);
 			this.focoAnterior?.focus?.();
+		}
+	}
+
+	/* =========================================================
+	   LIBRERÍA GOTA: carga bajo demanda del banco de pruebas
+	   ========================================================= */
+	class LibreriaGota {
+		static banco = null;
+
+		static cargarBanco() {
+			LibreriaGota.banco ??= new Promise((resolver, rechazar) => {
+				const estilos = document.createElement("link");
+				estilos.rel = "stylesheet";
+				// La versión de gota en la dirección: al actualizar la librería no se usa el banco viejo de la caché
+				estilos.href = `lib/gota/banco/banco.css?v=${gota.VERSION}`;
+				document.head.appendChild(estilos);
+
+				const script = document.createElement("script");
+				script.src = `lib/gota/banco/banco.js?v=${gota.VERSION}`;
+				script.onload = resolver;
+				script.onerror = () => { LibreriaGota.banco = null; rechazar(new Error("banco.js")); };
+				document.head.appendChild(script);
+			});
+			return LibreriaGota.banco;
 		}
 	}
 
@@ -1600,39 +1648,26 @@
 			this.vistaListado(entidad, escenario);
 		}
 
-		/** Filtros rápidos con contador: «Todos (10) · Empresa (4) · …» */
+		/** Filtros rápidos con contador: «Todos (10) · Empresa (4) · …», con el componente gota-filtros */
 		crearChips(entidad, contenedor) {
 			const campo = entidad.campos.find((c) => c.nombre === entidad.esquema.filtroRapido);
 			const estado = this.tabla.estadoDe(entidad);
-			const barra = document.createElement("div");
-			const opciones = [["", "Todos", entidad.todos().length]].concat(
-				(campo.opciones || []).map((o) => [o, o, entidad.todos().filter((r) => r[campo.nombre] === o).length])
+			const filtros = document.createElement("gota-filtros");
+			const cuantos = (valor) => entidad.todos().filter((r) => r[campo.nombre] === valor).length;
+
+			filtros.className = "filtros-rapidos";
+			filtros.etiqueta = `Filtrar por ${campo.etiqueta.toLowerCase()}`;
+			filtros.opciones = [{ valor: "", texto: "Todos", cantidad: entidad.todos().length }].concat(
+				(campo.opciones || []).map((o) => ({ valor: o, texto: o, cantidad: cuantos(o), tono: campo.colores?.[o] }))
 			);
-
-			barra.className = "chips";
-			barra.setAttribute("role", "group");
-			barra.setAttribute("aria-label", `Filtrar por ${campo.etiqueta.toLowerCase()}`);
-
-			opciones.forEach(([valor, texto, cantidad]) => {
-				const chip = document.createElement("button");
-				chip.type = "button";
-				chip.className = "chip";
-				chip.dataset.valor = valor;
-				if (valor && campo.colores) { chip.style.setProperty("--h", campo.colores[valor]); chip.classList.add("con-color"); }
-				chip.innerHTML = '<span class="chip-texto"></span><span class="chip-cantidad"></span>';
-				DOM.uno(".chip-texto", chip).textContent = texto;
-				DOM.uno(".chip-cantidad", chip).textContent = cantidad;
-				chip.setAttribute("aria-pressed", String(estado.filtroCampo === valor));
-				chip.addEventListener("click", () => {
-					estado.filtroCampo = valor;
-					estado.pagina = 1;
-					DOM.todos(".chip", barra).forEach((c) => c.setAttribute("aria-pressed", String(c === chip)));
-					this.tabla.pintar(entidad, contenedor);
-				});
-				barra.appendChild(chip);
+			filtros.value = estado.filtroCampo;
+			filtros.addEventListener("change", () => {
+				estado.filtroCampo = filtros.value;
+				estado.pagina = 1;
+				this.tabla.pintar(entidad, contenedor);
 			});
 
-			return barra;
+			return filtros;
 		}
 
 		vistaListado(entidad, escenario) {
@@ -1696,7 +1731,7 @@
 			);
 			this.natural?.prepararFormulario(formulario, entidad); // botón «Dictar»
 
-			DOM.uno("input:not([readonly]),select,textarea", formulario)?.focus();
+			DOM.uno("[name]:not([readonly])", formulario)?.focus();
 		}
 
 		async borrarRegistros(entidad, ids, volverAlListado = false) {
@@ -1873,7 +1908,28 @@
 		vistaComponentes(vista, escenario) {
 			if (vista === "toasts") { this.demoToasts(escenario); return; }
 			if (vista === "dialogos") { this.demoDialogos(escenario); return; }
-			this.demoFormularios(escenario);
+			if (vista === "formularios") { this.demoFormularios(escenario); return; }
+			this.vistaLibreria(escenario);
+		}
+
+		/** La librería de componentes (RA3) con su banco de pruebas, ya con el tema de serena | iu */
+		async vistaLibreria(escenario) {
+			const version = window.gota?.VERSION ?? "";
+			escenario.appendChild(this.cabecera(`Librería gota ${version}`,
+				"Los componentes con los que están hechos los formularios, filtros y listados. Cambia sus propiedades, llama a sus métodos y mira sus eventos."));
+
+			const banco = document.createElement("div");
+			banco.className = "tarjeta banco-en-app";
+			escenario.appendChild(banco);
+
+			// El banco viene dentro del paquete de gota: se carga solo la primera vez que se abre esta vista
+			try {
+				await LibreriaGota.cargarBanco();
+			} catch (error) {
+				banco.textContent = "No se ha podido cargar el banco de pruebas de gota.";
+				return;
+			}
+			if (banco.isConnected) { window.gotaBanco.montar(banco); }
 		}
 
 		demoFormularios(escenario) {
@@ -1971,10 +2027,7 @@
 				<p>Toda la interfaz sale de unas pocas variables CSS. Cambiarlas desde JavaScript recalcula los cinco niveles de profundidad.</p>
 				<div class="ajuste">
 					<span>Modo</span>
-					<div class="selector-modo">
-						<button class="boton" data-modo="oscuro" type="button">☾ Oscuro</button>
-						<button class="boton" data-modo="claro" type="button">☀ Claro</button>
-					</div>
+					<gota-filtros id="selectorModo" etiqueta="Modo"></gota-filtros>
 				</div>
 				<div class="ajuste">
 					<label for="rangoTono">Tono <output id="salidaTono"></output></label>
@@ -2000,11 +2053,12 @@
 			const paletas = [["Rosa serena", 335], ["Azul jocarsa", 200], ["Violeta", 265], ["Verde", 150], ["Ámbar", 32]];
 			const rango = DOM.uno("#rangoTono", tarjeta);
 			const salida = DOM.uno("#salidaTono", tarjeta);
+			const selectorModo = DOM.uno("#selectorModo", tarjeta);
 
 			const reflejar = (t) => {
 				rango.value = t.tono;
 				salida.textContent = `${t.tono}°`;
-				DOM.todos("[data-modo]", tarjeta).forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.modo === t.modo)));
+				selectorModo.value = t.modo;
 			};
 
 			paletas.forEach(([nombre, tono]) => {
@@ -2018,10 +2072,11 @@
 			});
 
 			rango.addEventListener("input", () => reflejar(TemaIU.aplicar({ tono: Number(rango.value) })));
-			DOM.todos("[data-modo]", tarjeta).forEach((boton) => boton.addEventListener("click", () => {
-				reflejar(TemaIU.aplicar({ modo: boton.dataset.modo }));
+			selectorModo.opciones = [{ valor: "oscuro", texto: "☾ Oscuro" }, { valor: "claro", texto: "☀ Claro" }];
+			selectorModo.addEventListener("change", () => {
+				reflejar(TemaIU.aplicar({ modo: selectorModo.value }));
 				this.actualizarBotonModo();
-			}));
+			});
 			DOM.uno("#restablecerTema", tarjeta).addEventListener("click", () => {
 				reflejar(TemaIU.restablecer());
 				this.actualizarBotonModo();
@@ -2167,7 +2222,7 @@
 	}
 
 	Object.assign(window.serena.iu, {
-		OrigenDatos, Entidad, FichaIU, Enrutador, GestorColumnas,
+		OrigenDatos, Entidad, FichaIU, LibreriaGota, Enrutador, GestorColumnas,
 		TablaIU, FormularioIU, ResumenIU, PaletaIU, DecoracionIU, GraficoIU, PanelDetalleIU, AplicacionIU
 	});
 

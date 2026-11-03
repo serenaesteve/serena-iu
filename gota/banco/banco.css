@@ -1,0 +1,91 @@
+/* Banco de pruebas de gota. Usa las mismas variables que los componentes,
+   así que adopta el tema de la página en la que esté. */
+.banco{
+	--b-tinta:var(--gota-tinta,#1B1216);
+	--b-suave:var(--gota-tinta-suave,#7A6770);
+	--b-linea:var(--gota-linea,rgb(42 32 38 / .14));
+	--b-campo:var(--gota-campo,#FFFFFF);
+	--b-acento:var(--gota-acento,#2A2026);
+	--b-boton:var(--gota-boton,rgb(42 32 38 / .05));
+	--b-boton-hover:var(--gota-boton-hover,rgb(42 32 38 / .09));
+	--b-radio:var(--gota-radio,18px);
+	--b-mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+	color:var(--b-tinta);
+}
+@media (prefers-color-scheme:dark){
+	.banco{
+		--b-tinta:var(--gota-tinta,#F7EEF2);
+		--b-suave:var(--gota-tinta-suave,#A7929C);
+		--b-linea:var(--gota-linea,rgb(237 228 232 / .14));
+		--b-campo:var(--gota-campo,rgb(247 238 242 / .06));
+		--b-acento:var(--gota-acento,#EDE4E8);
+		--b-boton:var(--gota-boton,rgb(237 228 232 / .07));
+		--b-boton-hover:var(--gota-boton-hover,rgb(237 228 232 / .14));
+	}
+}
+.banco-descripcion{max-width:68ch;margin:18px 0 20px;color:var(--b-suave);line-height:1.55;}
+.banco-mesa{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:32px;align-items:start;}
+.banco-izquierda{position:sticky;top:0;display:grid;gap:20px;min-width:0;}
+.banco-derecha{display:grid;gap:24px;min-width:0;}
+
+/* La escena: papel milimetrado, como una mesa de ensayo */
+.banco-escena{
+	display:grid;place-items:center;
+	min-height:260px;padding:48px 32px;
+	border-radius:var(--b-radio);
+	background-color:var(--b-campo);
+	--b-trama:color-mix(in oklab,var(--b-linea) 45%,transparent);
+	background-image:
+		linear-gradient(var(--b-trama) 1px,transparent 1px),
+		linear-gradient(90deg,var(--b-trama) 1px,transparent 1px);
+	background-size:24px 24px;
+	background-position:-1px -1px;
+}
+.banco-escena > *{width:min(380px,100%);}
+.banco-escena > gota-interruptor,.banco-escena > gota-paginador,.banco-escena > gota-nivel{width:auto;}
+.banco-escena > gota-filtros{width:auto;max-width:100%;}
+
+.banco-bloque h3{margin:0 0 10px;font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--b-suave);}
+.banco-codigo{
+	margin:0;padding:12px 14px;overflow-x:auto;
+	border-radius:var(--b-radio);
+	background:var(--b-campo);
+	font:12px/1.6 var(--b-mono);
+	white-space:pre-wrap;word-break:break-word;
+}
+.banco-mandos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 14px;}
+.banco-mando{display:grid;gap:4px;font:12px var(--b-mono);color:var(--b-suave);min-width:0;}
+.banco-mando span{cursor:help;}
+.banco-mando.en-linea{display:flex;align-items:center;justify-content:space-between;gap:8px;align-self:end;min-height:40px;}
+.banco-metodos{display:flex;flex-wrap:wrap;gap:6px;}
+.banco-metodo{
+	padding:5px 10px;border:1px solid var(--b-linea);border-radius:8px;
+	background:var(--b-boton);color:inherit;cursor:pointer;
+	font:12px var(--b-mono);
+	transition:background .15s;
+}
+.banco-metodo:hover{background:var(--b-boton-hover);}
+.banco-metodo:focus-visible{outline:2px solid var(--b-acento);outline-offset:2px;}
+.banco-eventos{
+	list-style:none;margin:0;padding:0;
+	max-height:190px;overflow-y:auto;
+	border-top:1px solid var(--b-linea);
+	font:12px/1.5 var(--b-mono);
+}
+.banco-eventos li{display:flex;flex-wrap:wrap;gap:0 10px;padding:6px 0;border-bottom:1px solid var(--b-linea);}
+.banco-eventos li:first-child:not(.pista) strong{color:var(--b-acento);}
+.banco-eventos .pista{color:var(--b-suave);border-bottom:0;}
+.banco-eventos time{color:var(--b-suave);}
+.banco-eventos code{flex-basis:100%;color:var(--b-suave);word-break:break-all;background:none;padding:0;}
+.banco-referencia{margin-top:28px;border-top:1px solid var(--b-linea);padding-top:12px;}
+.banco-referencia summary{cursor:pointer;font-weight:700;}
+.banco-referencia table{width:100%;margin-top:12px;border-collapse:collapse;font-size:13px;}
+.banco-referencia th,.banco-referencia td{padding:6px 10px 6px 0;border-bottom:1px solid var(--b-linea);text-align:left;vertical-align:top;}
+.banco-referencia td:nth-child(-n+4){font-family:var(--b-mono);font-size:12px;white-space:nowrap;}
+@media (max-width:900px){
+	.banco-mesa{grid-template-columns:minmax(0,1fr);}
+	.banco-izquierda{position:static;}
+	.banco-escena{padding:32px 16px;min-height:200px;}
+	.banco-referencia{overflow-x:auto;}
+}
+@media (max-width:480px){.banco-mandos{grid-template-columns:minmax(0,1fr);}}

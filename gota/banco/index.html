@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<meta name="description" content="Banco de pruebas de gota, una librería de componentes visuales sin dependencias.">
+	<title>gota · banco de pruebas</title>
+	<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><path d='M16 3C16 3 6 14 6 20a10 10 0 0 0 20 0C26 14 16 3 16 3Z' fill='%232A2026'/></svg>">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:ital,wght@0,700;0,900;1,500&display=swap">
+	<link rel="stylesheet" href="banco.css">
+	<link rel="stylesheet" href="../temas/agua.css">
+	<style>
+		:root{color-scheme:light dark;font-family:"DM Sans",system-ui,sans-serif;font-size:14px;}
+		body{
+			margin:0;min-height:100vh;color:#1B1216;
+			background:
+				radial-gradient(60% 50% at 0% 0%,rgb(248 196 214 / .7),transparent 70%),
+				radial-gradient(50% 45% at 100% 10%,rgb(251 220 200 / .6),transparent 70%),
+				radial-gradient(60% 50% at 70% 100%,rgb(226 214 245 / .55),transparent 70%),
+				#FBF2F2;
+			background-attachment:fixed;
+		}
+		@media (prefers-color-scheme:dark){
+			body{color:#F7EEF2;background:radial-gradient(60% 50% at 0% 0%,rgb(120 60 90 / .35),transparent 70%),radial-gradient(60% 50% at 80% 100%,rgb(80 60 120 / .3),transparent 70%),#140D11;}
+		}
+		/* En el tema «agua clara» el fondo de la página también cambia, para ver el tema completo */
+		body:has(.gota-tema-agua){background:oklch(.985 .004 228);color:oklch(.27 .035 240);}
+		@media (prefers-color-scheme:dark){body:has(.gota-tema-agua){background:oklch(.17 .018 240);color:oklch(.93 .012 228);}}
+		main{max-width:1180px;margin:0 auto;padding:48px 16px 72px;}
+		.antetitulo{display:flex;align-items:center;gap:12px;margin:0 0 14px;font-size:11px;font-weight:700;letter-spacing:.32em;text-transform:uppercase;}
+		.antetitulo::before{content:"";width:28px;height:1px;background:currentColor;}
+		h1{margin:0;font-family:"Playfair Display",Georgia,serif;font-weight:900;font-size:clamp(48px,9vw,96px);line-height:.95;letter-spacing:-.02em;}
+		h1 em{font-weight:500;opacity:.55;}
+		.cabecera{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:20px 32px;margin-bottom:28px;}
+		.cabecera p{max-width:52ch;margin:14px 0 0;line-height:1.6;opacity:.75;}
+		.tema{display:grid;gap:6px;font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;}
+	</style>
+	<script src="../dist/gota.js"></script>
+	<script src="banco.js" defer></script>
+</head>
+<body>
+	<main id="lienzo">
+		<div class="cabecera">
+			<div>
+				<p class="antetitulo">Librería de componentes</p>
+				<h1>gota <em>banco de pruebas</em></h1>
+				<p>Nueve componentes sin dependencias. Cambia sus propiedades, llama a sus métodos y mira los eventos que lanzan.</p>
+			</div>
+			<!-- El selector de tema también es un componente de la librería -->
+			<label class="tema">Tema
+				<gota-filtros id="tema" etiqueta="Tema"></gota-filtros>
+			</label>
+		</div>
+		<div id="banco"></div>
+	</main>
+	<script>
+		document.addEventListener("DOMContentLoaded", () => {
+			gotaBanco.montar(document.getElementById("banco"));
+
+			const tema = document.getElementById("tema");
+			tema.opciones = [
+				{ valor: "", texto: "Serena (por defecto)" },
+				{ valor: "gota-tema-agua", texto: "Agua clara" }
+			];
+			tema.value = "";
+			tema.addEventListener("change", () => {
+				document.getElementById("lienzo").className = tema.value;
+			});
+		});
+	</script>
+</body>
+</html>
